@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/DynamicLibraryProjects/DeCode/DeCode.csproj
+/DynamicLibraryProjects/DeCode/DeCode.csproj
+/DynamicLibraryProjects/DeCode/DeCode.csproj
