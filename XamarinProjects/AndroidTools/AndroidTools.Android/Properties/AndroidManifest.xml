@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.androidtools" android:installLocation="auto">
+	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="30" />
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+	<application android:label="AndroidTools.Android" android:theme="@style/MainTheme">
+		<!--下面开始是增加接收器的静态注册，android:name为接收器的实现类名，注意需要写上点号开始-->
+		<receiver android:enabled="true" android:name=".BootReceiver">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED"/>
+			</intent-filter>
+		</receiver>
+	</application>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<!--这个权限用于允许程序在手机屏幕关闭后后台进程仍然运行-->
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+	<!--用于创建前台服务-->
+	<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+</manifest>

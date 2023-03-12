@@ -1,0 +1,110 @@
+﻿<Window
+    x:Class="LoadingAnimationTest.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Animation="clr-namespace:LoadingAnimation;assembly=LoadingAnimation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:LoadingAnimationTest"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MainWindow"
+    Width="450"
+    Height="600"
+    AllowsTransparency="True"
+    Background="Transparent"
+    MouseLeftButtonDown="Window_MouseLeftButtonDown"
+    OpacityMask="White"
+    ResizeMode="NoResize"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <Style x:Key="BtnClose" TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="#000" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Width" Value="40" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="FontSize" Value="32" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+        <ControlTemplate x:Key="buttonTemplate" TargetType="Button">
+            <Border
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="0,15,0,0">
+                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="Black" />
+                </Trigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsMouseOver" Value="true" />
+                    </MultiTrigger.Conditions>
+                    <MultiTrigger.Setters>
+                        <Setter Property="Background" Value="#EEF1F1" />
+                    </MultiTrigger.Setters>
+                </MultiTrigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+    </Window.Resources>
+    <Border Background="#FFF" CornerRadius="10">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Border
+                Grid.Row="0"
+                Height="40"
+                CornerRadius="10">
+                <Button
+                    Click="Button_Click"
+                    Content="╳"
+                    Style="{DynamicResource BtnClose}"
+                    Template="{StaticResource buttonTemplate}" />
+            </Border>
+            <StackPanel
+                Grid.Row="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top">
+                <TextBlock
+                    Margin="0,0,0,20"
+                    HorizontalAlignment="Center"
+                    FontSize="23"
+                    Foreground="#787978"
+                    Text="加载中..." />
+
+                <Animation:CirclePointRingLoading
+                    Width="40"
+                    Height="40"
+                    Foreground="#3ca9fe"
+                    IsActive="True"
+                    IsLarge="False" />
+                <Animation:HorizontalPoingLoading
+                    Margin="0,10,0,0"
+                    EllipseDiameter="10"
+                    FillBrush="#3ca9fe" />
+                <Animation:ThreePoingLoading Margin="0,10,0,0" Foreground="#3ca9fe" />
+                <Animation:TwoPointLoading
+                    Margin="0,10,0,0"
+                    EllipseWidth="16"
+                    Foreground="#3ca9fe" />
+                <Animation:OnePointLoading Margin="0,10,0,0" Foreground="#3ca9fe" />
+
+                <Animation:RadnerLoading Margin="0,10,0,0" Foreground="#1ab394" />
+                <Animation:GridLoading Margin="0,10,0,0" Foreground="#3ca9fe" />
+                <Animation:FiveColumnLoading Margin="0,10,0,0" Foreground="#3ca9fe" />
+                <Animation:IconLoading
+                    Margin="0,10,0,0"
+                    Foreground="#3ca9fe"
+                    Icon="&#xe62e;"
+                    IconSize="40" />
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

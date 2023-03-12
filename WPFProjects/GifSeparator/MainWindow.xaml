@@ -1,0 +1,156 @@
+﻿<Window
+    x:Class="GifSeparator.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:GifSeparator"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="GIF解析"
+    Width="950"
+    Height="560"
+    BorderBrush="Blue"
+    BorderThickness="1"
+    MouseLeftButtonDown="Window_MouseLeftButtonDown"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Grid Margin="8,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="255" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <!--  Title  -->
+        <Grid
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            Margin="0">
+            <TextBlock
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Text="GIF解析工具" />
+            <Button
+                x:Name="WindowClear"
+                Width="40"
+                Height="30"
+                Margin="0,0,-8,0"
+                Padding="0"
+                HorizontalAlignment="Right"
+                Background="Transparent"
+                BorderThickness="0"
+                Click="WindowClear_Click"
+                Content="╳"
+                FontSize="18"
+                Style="{StaticResource ButtonStyleBase}" />
+        </Grid>
+
+        <!--  原图  -->
+        <GroupBox
+            Grid.Row="1"
+            Grid.Column="0"
+            Width="Auto"
+            Height="Auto"
+            Header="原图">
+            <StackPanel x:Name="spGifImage" VerticalAlignment="Center" />
+        </GroupBox>
+
+        <!--  操作、文件信息  -->
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <GroupBox
+                Margin="0,0,0,10"
+                Padding="10"
+                Header="操作">
+                <StackPanel
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Orientation="Horizontal">
+                    <Button
+                        x:Name="Open"
+                        Width="80"
+                        Height="24"
+                        Click="Open_Click"
+                        Content="打开图片"
+                        Style="{StaticResource ButtonStyle}" />
+                    <Button
+                        x:Name="Save"
+                        Width="80"
+                        Height="24"
+                        Margin="10,0"
+                        Click="Save_Click"
+                        Content="另存为..."
+                        Style="{StaticResource ButtonStyle}" />
+                    <Button
+                        x:Name="Clear"
+                        Width="80"
+                        Height="24"
+                        Click="Clear_Click"
+                        Content="清除"
+                        Style="{StaticResource ButtonStyle}" />
+                </StackPanel>
+            </GroupBox>
+            <GroupBox
+                Grid.Row="1"
+                Height="Auto"
+                Padding="10"
+                Header="图片信息">
+                <StackPanel>
+                    <StackPanel x:Name="spInfo">
+                        <TextBlock x:Name="txtVersion" FontSize="14" />
+                        <TextBlock
+                            x:Name="txtTotalFrames"
+                            Margin="0,5,0,0"
+                            FontSize="14" />
+                        <TextBlock
+                            x:Name="txtRealHeight"
+                            Margin="0,5,0,0"
+                            FontSize="14" />
+                        <TextBlock
+                            x:Name="txtRealWidth"
+                            Margin="0,5,0,0"
+                            FontSize="14" />
+                        <TextBlock
+                            x:Name="txtFileName"
+                            Margin="0,5,0,0"
+                            FontSize="14"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel x:Name="spError" Visibility="Collapsed">
+                        <TextBlock
+                            x:Name="txtErrorPrompt"
+                            FontSize="18"
+                            FontWeight="Black"
+                            Foreground="Red" />
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+        </Grid>
+
+        <!--  帧画  -->
+        <GroupBox
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            Height="240"
+            Margin="0,0,0,15"
+            VerticalAlignment="Top"
+            Header="帧">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                <StackPanel
+                    x:Name="spFrames"
+                    HorizontalAlignment="Left"
+                    Orientation="Horizontal" />
+            </ScrollViewer>
+        </GroupBox>
+
+    </Grid>
+</Window>

@@ -1,0 +1,17 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:LoadingAnimation">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/LoadingAnimation;component/CirclePointRingLoading.xaml" />
+        <ResourceDictionary Source="/LoadingAnimation;component/OnePointLoading.xaml" />
+        <ResourceDictionary Source="/LoadingAnimation;component/TwoPointLoading.xaml" />
+        <ResourceDictionary Source="/LoadingAnimation;component/ThreePoingLoading.xaml" />
+        <ResourceDictionary Source="/LoadingAnimation;component/HorizontalPointLoading.xaml" />
+        <ResourceDictionary Source="/LoadingAnimation;component/RadnerLoading.xaml" />
+        <ResourceDictionary Source="/LoadingAnimation;component/GridLoading.xaml" />
+        <ResourceDictionary Source="/LoadingAnimation;component/FiveColumnLoading.xaml" />
+        <ResourceDictionary Source="/LoadingAnimation;component/IconLoading.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

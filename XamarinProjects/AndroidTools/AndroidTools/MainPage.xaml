@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AndroidTools.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <StackLayout Margin="10,0">
+        <Label
+            FontSize="Title"
+            HorizontalTextAlignment="Center"
+            Text="Android Tools" />
+        <StackLayout Orientation="Horizontal">
+            <Label Text="自动开机时间：" VerticalOptions="Center" />
+            <TimePicker x:Name="OnTime" Time="06:00:00" />
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="自动关机时间：" VerticalOptions="Center" />
+            <TimePicker x:Name="OffTime" Time="20:00:00" />
+        </StackLayout>
+        <Button
+            x:Name="BtnSetUp"
+            Clicked="BtnSetUp_Clicked"
+            Text="执行开关机计划" />
+        <StackLayout Orientation="Horizontal">
+            <Label Text="安装包位置：" VerticalOptions="Center" />
+            <Editor x:Name="edAPKPath" Text="/sdcard/Download/examples.apk" />
+        </StackLayout>
+        <Button
+            x:Name="BtnSilentInstall"
+            Clicked="BtnSilentInstall_Clicked"
+            Text="SilentInstall" />
+        <StackLayout Orientation="Horizontal">
+            <Label Text="应用程序包名：" VerticalOptions="Center" />
+            <Editor x:Name="edPackageName" Text="com.companyname.androidtools" />
+        </StackLayout>
+        <Button
+            x:Name="BtnCheckInstalled"
+            Clicked="BtnCheckInstalled_Clicked"
+            Text="CheckInstalled" />
+    </StackLayout>
+
+</ContentPage>

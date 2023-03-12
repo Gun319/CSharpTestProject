@@ -1,0 +1,95 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33424.131
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ConsoleProjects", "ConsoleProjects", "{28BD646A-35AC-406A-B266-1C032BFC215A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPFProjects", "WPFProjects", "{B0824C9A-86C7-4366-B19B-1C7E2E281AA0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XamarinProjects", "XamarinProjects", "{809FC6C6-C355-4848-9465-34DD6A6A724F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASPDotNetCore", "ASPDotNetCore", "{233FF031-B50C-4688-B2E5-AE5B95E7DC13}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DynamicLibraryProjects", "DynamicLibraryProjects", "{E02009C8-5996-4C13-90D9-619BE6ABFA5B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AndroidTools", "XamarinProjects\AndroidTools\AndroidTools\AndroidTools.csproj", "{4B50431D-23E6-4BF5-99A3-C787620778C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndroidTools.Android", "XamarinProjects\AndroidTools\AndroidTools.Android\AndroidTools.Android.csproj", "{AC8838C4-888B-4F73-86CE-B4655D5CD920}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Animations", "Animations", "{E2BB340F-5531-4B9B-AE5C-E84F53EE1F95}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoadingAnimation", "WPFProjects\Animations\LoadingAnimation\LoadingAnimation.csproj", "{E9EAC299-A4B6-4572-B4AC-E792A264D4D2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoadingAnimationTest", "WPFProjects\Animations\LoadingAnimationTest\LoadingAnimationTest.csproj", "{3BBABAEF-E10F-4C93-B696-54CB1E90D5A1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseConnectionTestTool", "WPFProjects\DatabaseConnectionTestTool\DatabaseConnectionTestTool.csproj", "{61F87C76-6FCC-45D6-9FD2-5923BDDC3AFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BesselCurve", "WPFProjects\BesselCurve\BesselCurve.csproj", "{DBF0801B-9603-4875-A89E-A65D0743BAC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GifSeparator", "WPFProjects\GifSeparator\GifSeparator.csproj", "{A8B2423F-D314-4FC2-8202-BA779CD9EB5B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Librarys", "Librarys", "{235ACF90-FA7E-4E4A-A37C-3CFE47A7F7F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowCornerModel", "Librarys\WindowCornerModel\WindowCornerModel.csproj", "{88A524C5-AABE-46E7-846F-2B820F5B515F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4B50431D-23E6-4BF5-99A3-C787620778C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B50431D-23E6-4BF5-99A3-C787620778C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B50431D-23E6-4BF5-99A3-C787620778C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B50431D-23E6-4BF5-99A3-C787620778C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC8838C4-888B-4F73-86CE-B4655D5CD920}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC8838C4-888B-4F73-86CE-B4655D5CD920}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC8838C4-888B-4F73-86CE-B4655D5CD920}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{AC8838C4-888B-4F73-86CE-B4655D5CD920}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC8838C4-888B-4F73-86CE-B4655D5CD920}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC8838C4-888B-4F73-86CE-B4655D5CD920}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{E9EAC299-A4B6-4572-B4AC-E792A264D4D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9EAC299-A4B6-4572-B4AC-E792A264D4D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9EAC299-A4B6-4572-B4AC-E792A264D4D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9EAC299-A4B6-4572-B4AC-E792A264D4D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BBABAEF-E10F-4C93-B696-54CB1E90D5A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BBABAEF-E10F-4C93-B696-54CB1E90D5A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BBABAEF-E10F-4C93-B696-54CB1E90D5A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BBABAEF-E10F-4C93-B696-54CB1E90D5A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61F87C76-6FCC-45D6-9FD2-5923BDDC3AFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61F87C76-6FCC-45D6-9FD2-5923BDDC3AFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61F87C76-6FCC-45D6-9FD2-5923BDDC3AFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61F87C76-6FCC-45D6-9FD2-5923BDDC3AFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBF0801B-9603-4875-A89E-A65D0743BAC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBF0801B-9603-4875-A89E-A65D0743BAC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBF0801B-9603-4875-A89E-A65D0743BAC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBF0801B-9603-4875-A89E-A65D0743BAC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8B2423F-D314-4FC2-8202-BA779CD9EB5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8B2423F-D314-4FC2-8202-BA779CD9EB5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8B2423F-D314-4FC2-8202-BA779CD9EB5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8B2423F-D314-4FC2-8202-BA779CD9EB5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88A524C5-AABE-46E7-846F-2B820F5B515F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88A524C5-AABE-46E7-846F-2B820F5B515F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88A524C5-AABE-46E7-846F-2B820F5B515F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88A524C5-AABE-46E7-846F-2B820F5B515F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4B50431D-23E6-4BF5-99A3-C787620778C5} = {809FC6C6-C355-4848-9465-34DD6A6A724F}
+		{AC8838C4-888B-4F73-86CE-B4655D5CD920} = {809FC6C6-C355-4848-9465-34DD6A6A724F}
+		{E2BB340F-5531-4B9B-AE5C-E84F53EE1F95} = {B0824C9A-86C7-4366-B19B-1C7E2E281AA0}
+		{E9EAC299-A4B6-4572-B4AC-E792A264D4D2} = {E2BB340F-5531-4B9B-AE5C-E84F53EE1F95}
+		{3BBABAEF-E10F-4C93-B696-54CB1E90D5A1} = {E2BB340F-5531-4B9B-AE5C-E84F53EE1F95}
+		{61F87C76-6FCC-45D6-9FD2-5923BDDC3AFB} = {B0824C9A-86C7-4366-B19B-1C7E2E281AA0}
+		{DBF0801B-9603-4875-A89E-A65D0743BAC5} = {B0824C9A-86C7-4366-B19B-1C7E2E281AA0}
+		{A8B2423F-D314-4FC2-8202-BA779CD9EB5B} = {B0824C9A-86C7-4366-B19B-1C7E2E281AA0}
+		{235ACF90-FA7E-4E4A-A37C-3CFE47A7F7F9} = {B0824C9A-86C7-4366-B19B-1C7E2E281AA0}
+		{88A524C5-AABE-46E7-846F-2B820F5B515F} = {235ACF90-FA7E-4E4A-A37C-3CFE47A7F7F9}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A05443A2-A688-4C83-81B3-F8159BB5C11C}
+	EndGlobalSection
+EndGlobal
