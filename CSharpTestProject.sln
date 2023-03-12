@@ -25,15 +25,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoadingAnimationTest", "WPF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseConnectionTestTool", "WPFProjects\DatabaseConnectionTestTool\DatabaseConnectionTestTool.csproj", "{61F87C76-6FCC-45D6-9FD2-5923BDDC3AFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BesselCurve", "WPFProjects\BesselCurve\BesselCurve.csproj", "{DBF0801B-9603-4875-A89E-A65D0743BAC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BesselCurve", "WPFProjects\BesselCurve\BesselCurve.csproj", "{DBF0801B-9603-4875-A89E-A65D0743BAC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GifSeparator", "WPFProjects\GifSeparator\GifSeparator.csproj", "{A8B2423F-D314-4FC2-8202-BA779CD9EB5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GifSeparator", "WPFProjects\GifSeparator\GifSeparator.csproj", "{A8B2423F-D314-4FC2-8202-BA779CD9EB5B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Librarys", "Librarys", "{235ACF90-FA7E-4E4A-A37C-3CFE47A7F7F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowCornerModel", "Librarys\WindowCornerModel\WindowCornerModel.csproj", "{88A524C5-AABE-46E7-846F-2B820F5B515F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowCornerModel", "Librarys\WindowCornerModel\WindowCornerModel.csproj", "{88A524C5-AABE-46E7-846F-2B820F5B515F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TUSBreakpointContinuation", "ASPDotNetCore\TUSBreakpointContinuation\TUSBreakpointContinuation.csproj", "{F18841E9-F2BB-4A02-862D-C09E134A9391}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TUSBreakpointContinuation", "ASPDotNetCore\TUSBreakpointContinuation\TUSBreakpointContinuation.csproj", "{F18841E9-F2BB-4A02-862D-C09E134A9391}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeCode", "DynamicLibraryProjects\DeCode\DeCode.csproj", "{D56FDF71-F786-4A20-861C-262B47975595}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +81,10 @@ Global
 		{F18841E9-F2BB-4A02-862D-C09E134A9391}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F18841E9-F2BB-4A02-862D-C09E134A9391}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F18841E9-F2BB-4A02-862D-C09E134A9391}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D56FDF71-F786-4A20-861C-262B47975595}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D56FDF71-F786-4A20-861C-262B47975595}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D56FDF71-F786-4A20-861C-262B47975595}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D56FDF71-F786-4A20-861C-262B47975595}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,6 +100,7 @@ Global
 		{A8B2423F-D314-4FC2-8202-BA779CD9EB5B} = {B0824C9A-86C7-4366-B19B-1C7E2E281AA0}
 		{88A524C5-AABE-46E7-846F-2B820F5B515F} = {235ACF90-FA7E-4E4A-A37C-3CFE47A7F7F9}
 		{F18841E9-F2BB-4A02-862D-C09E134A9391} = {233FF031-B50C-4688-B2E5-AE5B95E7DC13}
+		{D56FDF71-F786-4A20-861C-262B47975595} = {E02009C8-5996-4C13-90D9-619BE6ABFA5B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A05443A2-A688-4C83-81B3-F8159BB5C11C}
