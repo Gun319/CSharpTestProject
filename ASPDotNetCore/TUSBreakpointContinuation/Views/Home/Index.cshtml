@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<link href="~/lib/layui/css/layui.css" rel="stylesheet" />
+<script src="~/lib/layui/layui.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/tus-js-client/dist/tus.min.js"></script>
+
+
+<div class="form-horizontal" style="margin:100px auto;text-align:center;">
+    <div class="form-group" id="progress-group" style="display:block;">
+        <div id="size"></div>
+        <div class="progress">
+            <div id="progress" class="progress-bar progress-bar-success progress-bar-animated progress-bar-striped" role="progressbar"
+                 aria-valuemin="0" aria-valuemax="100">
+                <span id="percentage"></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group" style="margin-top: 15px;">
+        <div class="row">
+            <div class="input-group">
+                <input name="file" id="file" type="file" class="form-control" aria-describedby="file" aria-label="Upload">
+                <div style="margin-left: 1vw;">
+                    <button class="layui-btn" type="button" id="upload">上传</button>
+                    <button class="layui-btn layui-btn-danger" type="button" id="pause">暂停</button>
+                    <button class="layui-btn layui-btn-normal" type="button" id="continue">继续</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/tusTool.js"></script>
