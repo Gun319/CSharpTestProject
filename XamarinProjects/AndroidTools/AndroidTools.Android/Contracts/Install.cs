@@ -8,7 +8,7 @@ using System.Linq;
 namespace AndroidTools.Droid.Contracts
 {
     /// <summary>
-    /// APP安装、检测
+    /// APP安装、检测、卸载
     /// </summary>
     public class Install : IInstall
     {
@@ -26,17 +26,25 @@ namespace AndroidTools.Droid.Contracts
 
         public bool SilentInstall(string apkPath)
         {
+            return ExecuteCommand($"pm install -r {apkPath}");
+        }
+
+        public bool UnInstall(string packageName)
+        {
+            return CheckAppInstalled(packageName) && ExecuteCommand($"pm uninstall {packageName}");
+        }
+
+        private bool ExecuteCommand(string commandStr)
+        {
             try
             {
-                string cmd = $"pm install -r {apkPath}";
-
                 using Process p = Runtime.GetRuntime().Exec("su");
 
                 Java.IO.BufferedReader ins = new Java.IO.BufferedReader(new Java.IO.InputStreamReader(p.InputStream));
                 Java.IO.BufferedReader ie = new Java.IO.BufferedReader(new Java.IO.InputStreamReader(p.ErrorStream));
                 Java.IO.BufferedWriter w = new Java.IO.BufferedWriter(new Java.IO.OutputStreamWriter(p.OutputStream));
 
-                w.Write(cmd);
+                w.Write(commandStr);
                 w.Flush();
                 w.Close();
 
@@ -65,7 +73,7 @@ namespace AndroidTools.Droid.Contracts
                 Toast.MakeText(_context, $"Exception：{ex.Message}", ToastLength.Short).Show();
                 return false;
             }
-            return true;
+            return false;
         }
     }
 }

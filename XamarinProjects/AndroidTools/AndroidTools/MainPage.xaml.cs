@@ -48,6 +48,12 @@ namespace AndroidTools
         {
             string apkPath = edAPKPath.Text.Trim();
 
+            if (string.IsNullOrWhiteSpace(apkPath) && !apkPath.Contains(".apk"))
+            {
+                await DisplayAlert("消息", "请检查安装路径及文件名", "确定");
+                return;
+            }
+
             if (_install.SilentInstall(apkPath))
                 await DisplayAlert("消息", "APP安装成功", "确定");
         }
@@ -60,8 +66,34 @@ namespace AndroidTools
         private async void BtnCheckInstalled_Clicked(object sender, EventArgs e)
         {
             string packageName = edPackageName.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(packageName))
+            {
+                await DisplayAlert("消息", "程序包名不能为空", "确定");
+                return;
+            }
+
             if (_install.CheckAppInstalled(packageName))
                 await DisplayAlert("消息", $"{packageName} 已安装", "确定");
+        }
+
+        /// <summary>
+        /// 卸载APP
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void BtnUnInstalled_Clicked(object sender, EventArgs e)
+        {
+            string packageName = edPackageName.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(packageName))
+            {
+                await DisplayAlert("消息", "程序包名不能为空", "确定");
+                return;
+            }
+
+            if (_install.UnInstall(packageName))
+                await DisplayAlert("消息", $"{packageName} 已卸载", "确定");
         }
     }
 }
