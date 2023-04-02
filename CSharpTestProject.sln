@@ -37,6 +37,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TUSBreakpointContinuation",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jwt", "ASPDotNetCore\Jwt\Jwt.csproj", "{B6B14A44-D00D-4D74-B848-2189238CC151}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlobalExceptionFilter", "ASPDotNetCore\GlobalExceptionFilter\GlobalExceptionFilter.csproj", "{285B92F0-125A-48EE-A45C-CFBAA12C20FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,10 @@ Global
 		{B6B14A44-D00D-4D74-B848-2189238CC151}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6B14A44-D00D-4D74-B848-2189238CC151}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6B14A44-D00D-4D74-B848-2189238CC151}.Release|Any CPU.Build.0 = Release|Any CPU
+		{285B92F0-125A-48EE-A45C-CFBAA12C20FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{285B92F0-125A-48EE-A45C-CFBAA12C20FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{285B92F0-125A-48EE-A45C-CFBAA12C20FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{285B92F0-125A-48EE-A45C-CFBAA12C20FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -101,6 +107,7 @@ Global
 		{88A524C5-AABE-46E7-846F-2B820F5B515F} = {235ACF90-FA7E-4E4A-A37C-3CFE47A7F7F9}
 		{F18841E9-F2BB-4A02-862D-C09E134A9391} = {233FF031-B50C-4688-B2E5-AE5B95E7DC13}
 		{B6B14A44-D00D-4D74-B848-2189238CC151} = {233FF031-B50C-4688-B2E5-AE5B95E7DC13}
+		{285B92F0-125A-48EE-A45C-CFBAA12C20FC} = {233FF031-B50C-4688-B2E5-AE5B95E7DC13}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A05443A2-A688-4C83-81B3-F8159BB5C11C}
