@@ -1,0 +1,95 @@
+﻿<Window
+    x:Class="MyVLCMediaPlayer.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:MyVLCMediaPlayer"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MainWindow"  xmlns:VLC="clr-namespace:LibVLCSharp.WPF;assembly=LibVLCSharp.WPF"
+    AllowDrop="True"
+    DragEnter="Window_DragEnter"
+    Drop="Window_Drop"
+    KeyDown="Window_KeyDown"
+    MouseDoubleClick="Window_MouseDoubleClick"
+    MouseLeftButtonDown="Window_MouseLeftButtonDown"
+    Style="{StaticResource MainWindowStyle}"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Border x:Name="BorderWindow">
+        <Grid Background="#2A2C37">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid
+                x:Name="GdTitle"
+                Grid.Row="0"
+                Height="30">
+                <Label
+                    x:Name="LabelTitle"
+                    VerticalContentAlignment="Center"
+                    Content="MyVlcMediaPlayer"
+                    Foreground="#CACCDF" />
+                <StackPanel
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <Button
+                        x:Name="BtnNetworkVideo"
+                        Click="BtnNetworkVideo_Click"
+                        Content="  播放网络视频  "
+                        Style="{StaticResource OpenFileButtonStyle}" />
+                    <Button
+                        x:Name="BtnOpenFile"
+                        Click="BtnOpenFile_Click"
+                        Content="  打开视频文件  "
+                        Style="{StaticResource OpenFileButtonStyle}" />
+                    <Button
+                        x:Name="BtnOpenFolder"
+                        Click="BtnOpenFolder_Click"
+                        Content="  导入播放列表  "
+                        Style="{StaticResource OpenFileButtonStyle}" />
+                    <Button
+                        x:Name="BtnLoop"
+                        Click="BtnLoop_Click"
+                        Content="  开启循环播放  "
+                        Style="{StaticResource OpenFileButtonStyle}" />
+                    <Button
+                        x:Name="BtnCloseApplication"
+                        Click="BtnCloseApplication_Click"
+                        Content="&#xe624;"
+                        Style="{StaticResource ColseButtonStyle}" />
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <VLC:VideoView x:Name="VLCMediaPlayer" IsEnabled="False" />
+            </Grid>
+            <Grid
+                x:Name="GdBottom"
+                Grid.Row="2"
+                Height="50">
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <Button
+                        x:Name="BtnBackOff"
+                        Click="BtnBackOff_Click"
+                        Content="&#xe866;"
+                        Style="{StaticResource PlayButtonStyle}" />
+                    <Button
+                        x:Name="BtnPlayOrStop"
+                        Click="BtnPlayOrStop_Click"
+                        Content="&#xe864;"
+                        Style="{StaticResource PlayButtonStyle}" />
+                    <Button
+                        x:Name="BtnFastForward"
+                        Click="BtnFastForward_Click"
+                        Content="&#xe865;"
+                        Style="{StaticResource PlayButtonStyle}" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

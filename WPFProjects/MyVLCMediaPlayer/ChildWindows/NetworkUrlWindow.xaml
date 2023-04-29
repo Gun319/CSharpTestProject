@@ -1,0 +1,46 @@
+﻿<Window x:Class="MyVLCMediaPlayer.ChildWindows.NetworkUrlWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyVLCMediaPlayer.ChildWindows"
+        mc:Ignorable="d" Style="{StaticResource NetworkUrlWindowStyle}"
+        Title="网络地址" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+    <Grid Background="#2A2C37">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="140"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="25">
+                <TextBox x:Name="TxtNetworkUrl" DockPanel.Dock="Left" Style="{StaticResource NetworkUrlTextBoxStyle}" GotFocus="TxtNetworkUrl_GotFocus"
+                         MouseDoubleClick="TxtNetworkUrl_MouseDoubleClick" Text="http://cctvalih5ca.v.myalicdn.com/live/cctv1_2/index.m3u8"/>
+            </StackPanel>
+            <Grid Grid.Row="1" Margin="20 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" VerticalAlignment="Center">
+                    <Label x:Name="ErrorPrompt" Foreground="Red"/>
+                </Grid>
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="2 0 0 0" VerticalAlignment="Center">
+                    <CheckBox x:Name="ChkMore" Content="更多" Style="{StaticResource ChkMoreCheckBoxStyle}" Checked="ChkMore_Checked" Unchecked="ChkMore_Unchecked"/>
+                    <StackPanel x:Name="SPMore" Orientation="Horizontal" VerticalAlignment="Center" Margin="0 -1 0 0">
+                        <Label Content="缓冲时长" Foreground="#CACCDF"/>
+                        <TextBox x:Name="TxtCancel" Style="{StaticResource CancelTextStyle}" PreviewTextInput="TxtCancel_PreviewTextInput"/>
+                        <Label Content="ms" Foreground="#CACCDF"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button x:Name="BtnYes" Content="确定" Style="{StaticResource NetworkUrlYesButtonStyle}" Click="BtnYes_Click"/>
+            <Button x:Name="BtnCancel" Content="取消" Style="{StaticResource NetworkUrlCancelButtonStyle}" Click="BtnCancel_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

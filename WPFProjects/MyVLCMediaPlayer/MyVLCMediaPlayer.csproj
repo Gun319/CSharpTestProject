@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<Version>1.0.1</Version>
+		<ApplicationIcon>ApplicationIcon.ico</ApplicationIcon>
+		<StartupObject>MyVLCMediaPlayer.App</StartupObject>
+		<Win32Resource />
+		<NoWin32Manifest>true</NoWin32Manifest>
+		<SignAssembly>false</SignAssembly>
+		<PlatformTarget>x64</PlatformTarget>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <NoWarn>1701;1702;8618;8602;8622;8625;</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <NoWarn>1701;1702;8618;8602;8622;8625;</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="LaunchPreview.jpg" />
+		<None Remove="Resources\iconfont.ttf" />
+		<None Remove="Resources\LaunchPreview.jpg" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="LibVLCSharp" Version="3.6.0" />
+		<PackageReference Include="LibVLCSharp.WPF" Version="3.6.0" />
+		<PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.17.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Resource Include="Resources\iconfont.ttf">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <SplashScreen Include="LaunchPreview.jpg">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </SplashScreen>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="ApplicationIcon.ico">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+</Project>
