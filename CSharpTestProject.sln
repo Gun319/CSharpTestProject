@@ -43,6 +43,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFmpegPlayer", "WPFProjects
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthCodeIdentification", "WPFProjects\HealthCodeIdentification\HealthCodeIdentification.csproj", "{2BA68C50-0467-40F9-88C6-FFF7C7981B9E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XAMLToImage", "XAMLToImage\XAMLToImage.csproj", "{C84A5406-CE5C-49C7-A55E-629090BC45BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -103,6 +105,10 @@ Global
 		{2BA68C50-0467-40F9-88C6-FFF7C7981B9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BA68C50-0467-40F9-88C6-FFF7C7981B9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BA68C50-0467-40F9-88C6-FFF7C7981B9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C84A5406-CE5C-49C7-A55E-629090BC45BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C84A5406-CE5C-49C7-A55E-629090BC45BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C84A5406-CE5C-49C7-A55E-629090BC45BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C84A5406-CE5C-49C7-A55E-629090BC45BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -122,6 +128,7 @@ Global
 		{285B92F0-125A-48EE-A45C-CFBAA12C20FC} = {233FF031-B50C-4688-B2E5-AE5B95E7DC13}
 		{AF1FD51A-88CE-4B0A-AD6F-1A60E4C1F102} = {B0824C9A-86C7-4366-B19B-1C7E2E281AA0}
 		{2BA68C50-0467-40F9-88C6-FFF7C7981B9E} = {B0824C9A-86C7-4366-B19B-1C7E2E281AA0}
+		{C84A5406-CE5C-49C7-A55E-629090BC45BC} = {B0824C9A-86C7-4366-B19B-1C7E2E281AA0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A05443A2-A688-4C83-81B3-F8159BB5C11C}

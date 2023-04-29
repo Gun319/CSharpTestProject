@@ -1,0 +1,20 @@
+﻿<Window
+    x:Class="XAMLToImage.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:XAMLToImage"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MainWindow"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Grid>
+        <Button
+            x:Name="btnCreate"
+            Width="80"
+            Height="30"
+            Click="btnCreate_Click"
+            Content="导出为图片" />
+    </Grid>
+</Window>
