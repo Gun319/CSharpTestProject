@@ -8,7 +8,7 @@ using System.Windows.Threading;
 
 namespace GifSeparator.Common
 {
-    internal class GifAnimation:Viewbox
+    internal class GifAnimation : Viewbox
     {
         private class GifFrame : Image
         {
