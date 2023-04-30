@@ -20,7 +20,6 @@ namespace MyVLCMediaPlayer
 
         /// <summary>
         /// 播放进度
-        /// 0.0~1.0
         /// </summary>
         private float VlcPosition { get; set; }
 
@@ -50,13 +49,13 @@ namespace MyVLCMediaPlayer
         {
             InitializeComponent();
 
+            Init();
+
             hWnd = new WindowInteropHelper(GetWindow(this)).EnsureHandle(); // 获取当前窗口句柄
             if (WindowsCorner.OSVersion())
             {
                 WindowCorner(WindowsCorner.DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUND);
             }
-
-            Init();
         }
 
         /// <summary>
@@ -68,23 +67,11 @@ namespace MyVLCMediaPlayer
             {
                 VLCMediaPlayer.MediaPlayer = new MediaPlayer(CommonClass.VLCMedia)
                 {
-                    Volume = 100,
+                    Volume = 100
 
                 };
+                VLCMediaPlayer.MediaPlayer.Play();
             });
-        }
-
-        /// <summary>
-        /// 鼠标右键双击全屏
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            Dispatcher.BeginInvoke(new Action(() =>
-            {
-                IsFullScreen();
-            }));
         }
 
         /// <summary>
@@ -98,28 +85,14 @@ namespace MyVLCMediaPlayer
             {
                 switch (e.Key)
                 {
-                    case Key.Space: // 全屏下播放/暂停/停止
+                    case Key.Space:
                         Dispatcher.BeginInvoke(new Action(() =>
                         {
-                            if (VLCMediaPlayer.MediaPlayer.IsPlaying)
-                            {
-                                if (WindowState is WindowState.Maximized && !(PlayList is null))
-                                {
-                                    VLCMediaPlayer.MediaPlayer.Pause();
-                                }
-                                else
-                                {
-                                    VLCMediaPlayer.MediaPlayer.Stop();
-                                }
-                            }
-                            else
-                            {
-                                VLCMediaPlayer.MediaPlayer.Play();
-                            }
+                            BtnPlayOrStop_Click(null, null);
                         }));
                         break;
 
-                    case Key.Escape: // 退出全屏
+                    case Key.Enter: // 全屏调整
                         Dispatcher.BeginInvoke(new Action(() =>
                         {
                             IsFullScreen();
@@ -129,14 +102,14 @@ namespace MyVLCMediaPlayer
                     case Key.Right: // 快进
                         Dispatcher.Invoke(() =>
                         {
-                            VLCMediaPlayer.MediaPlayer.Time += 5000;
+                            BtnFastForward_Click(null, null);
                         });
                         break;
 
                     case Key.Left: // 快退
                         Dispatcher.Invoke(() =>
                         {
-                            VLCMediaPlayer.MediaPlayer.Time -= 5000;
+                            BtnBackOff_Click(null, null);
                         });
                         break;
 
@@ -155,9 +128,6 @@ namespace MyVLCMediaPlayer
                         {
                             VLCMediaPlayer.MediaPlayer.Volume -= 5;
                         });
-                        break;
-
-                    default:
                         break;
                 }
             }));
@@ -365,7 +335,7 @@ namespace MyVLCMediaPlayer
         }
 
         /// <summary>
-        /// 播放/暂停/停止
+        /// 播放/暂停
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -373,22 +343,30 @@ namespace MyVLCMediaPlayer
         {
             if (VLCMediaPlayer.MediaPlayer.IsPlaying)
             {
-                if (PlayList is null)
-                {
-                    VLCMediaPlayer.MediaPlayer.Stop();
-                    BtnPlayOrStop.Content = CommonClass.StringToUnicode("&#xe864;");
-                    return;
-                }
-
-                VLCMediaPlayer.MediaPlayer.Pause();
-                BtnPlayOrStop.Content = CommonClass.StringToUnicode("&#xe864;");
-                return;
+                Pause();
             }
             else
             {
-                VLCMediaPlayer.MediaPlayer.Play();
-                BtnPlayOrStop.Content = CommonClass.StringToUnicode("&#xe867;");
+                Play();
             }
+        }
+
+        /// <summary>
+        /// 播放
+        /// </summary>
+        private void Play()
+        {
+            VLCMediaPlayer.MediaPlayer.Play();
+            BtnPlayOrStop.Content = CommonClass.StringToUnicode("&#xe867;");
+        }
+
+        /// <summary>
+        /// 暂停
+        /// </summary>
+        private void Pause()
+        {
+            VLCMediaPlayer.MediaPlayer.Pause();
+            BtnPlayOrStop.Content = CommonClass.StringToUnicode("&#xe864;");
         }
 
         /// <summary>

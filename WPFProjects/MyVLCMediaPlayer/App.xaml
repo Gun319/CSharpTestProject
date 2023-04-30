@@ -6,31 +6,33 @@
     StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-
-            <!--  窗体  -->
-            <Style x:Key="WindowStyle" TargetType="{x:Type Window}">
-                <Setter Property="FontSize" Value="16" />
-            </Style>
+            <SolidColorBrush x:Key="FontDominantColor">#FAFAFA</SolidColorBrush>
+            <SolidColorBrush x:Key="WindowColor">#1F1F1F</SolidColorBrush>
 
             <!--  主窗体  -->
-            <Style
-                x:Key="MainWindowStyle"
-                BasedOn="{StaticResource WindowStyle}"
-                TargetType="{x:Type Window}">
+            <Style x:Key="MainWindowStyle" TargetType="{x:Type Window}">
                 <Setter Property="Title" Value="VLCMediaPlayer" />
                 <Setter Property="Width" Value="1200" />
                 <Setter Property="Height" Value="800" />
                 <Setter Property="ResizeMode" Value="NoResize" />
                 <Setter Property="WindowStyle" Value="None" />
                 <Setter Property="AllowDrop" Value="True" />
+                <Setter Property="Background" Value="{StaticResource WindowColor}" />
+
+            </Style>
+
+            <Style x:Key="TitleStyle" TargetType="{x:Type Label}">
+                <Setter Property="Content" Value="MyVlcMediaPlayer" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="Foreground" Value="{StaticResource FontDominantColor}" />
+                <Setter Property="Margin" Value="5,0" />
             </Style>
 
             <!--  按钮  -->
             <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
                 <Style.Setters>
-                    <Setter Property="FontFamily" Value="pack://application:,,,/Resources/#iconfont" />
                     <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="Foreground" Value="#CACCDF" />
+                    <Setter Property="Foreground" Value="{StaticResource FontDominantColor}" />
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type Button}">
@@ -63,8 +65,9 @@
                 BasedOn="{StaticResource ButtonStyle}"
                 TargetType="{x:Type Button}">
                 <Style.Setters>
-                    <Setter Property="Width" Value="35" />
-                    <Setter Property="Height" Value="30" />
+                    <Setter Property="FontFamily" Value="pack://application:,,,/Resources/#iconfont" />
+                    <Setter Property="Width" Value="45" />
+                    <Setter Property="Height" Value="35" />
                     <Setter Property="Margin" Value="0,-1,0,0" />
                 </Style.Setters>
                 <Style.Triggers>
@@ -80,7 +83,7 @@
                 BasedOn="{StaticResource ButtonStyle}"
                 TargetType="{x:Type Button}">
                 <Style.Setters>
-                    <Setter Property="Height" Value="25" />
+                    <Setter Property="Height" Value="30" />
                 </Style.Setters>
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
@@ -94,21 +97,21 @@
                 BasedOn="{StaticResource ButtonStyle}"
                 TargetType="{x:Type Button}">
                 <Style.Setters>
+                    <Setter Property="FontFamily" Value="pack://application:,,,/Resources/#iconfont" />
                     <Setter Property="FontSize" Value="40" />
-                    <Setter Property="Margin" Value="5,0" />
+                    <Setter Property="Margin" Value="10,0" />
+                    <Setter Property="Cursor" Value="Hand" />
                 </Style.Setters>
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
                         <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Foreground" Value="#FF5C38" />
                     </Trigger>
                 </Style.Triggers>
             </Style>
 
             <!--  网络地址窗体  -->
-            <Style
-                x:Key="NetworkUrlWindowStyle"
-                BasedOn="{StaticResource WindowStyle}"
-                TargetType="{x:Type Window}">
+            <Style x:Key="NetworkUrlWindowStyle" TargetType="{x:Type Window}">
                 <Setter Property="Width" Value="800" />
                 <Setter Property="Height" Value="170" />
                 <Setter Property="ResizeMode" Value="NoResize" />
