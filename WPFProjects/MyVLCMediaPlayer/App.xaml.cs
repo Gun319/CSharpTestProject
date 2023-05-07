@@ -20,8 +20,6 @@ namespace MyVLCMediaPlayer
 
         public App()
         {
-            InitializeComponent();
-
             Process[] pList = Process.GetProcessesByName("MyVLCMediaPlayer");
 
             if (pList.Where(p => p.Id != Environment.ProcessId).Any())
