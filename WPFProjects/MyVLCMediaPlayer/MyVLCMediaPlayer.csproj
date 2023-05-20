@@ -42,9 +42,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <SplashScreen Include="LaunchPreview.jpg">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </SplashScreen>
+	  <Resource Include="Resources\LaunchPreview.jpg">
+	    <CopyToOutputDirectory></CopyToOutputDirectory>
+	  </Resource>
 	</ItemGroup>
 
 	<ItemGroup>

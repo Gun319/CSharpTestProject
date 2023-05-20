@@ -32,6 +32,9 @@ namespace MyVLCMediaPlayer
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            SplashScreen splash = new("/Resources/LaunchPreview.jpg");
+            splash.Show(true);
+
             Task.Factory.StartNew(() =>
             {
                 Core.Initialize();
