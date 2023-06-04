@@ -6,14 +6,16 @@
     StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <SolidColorBrush x:Key="FontDominantColor">#FAFAFA</SolidColorBrush>
-            <SolidColorBrush x:Key="WindowColor">#1F1F1F</SolidColorBrush>
+            <SolidColorBrush x:Key="FontDominantColor">#CACCDF</SolidColorBrush>
+            <SolidColorBrush x:Key="WindowColor">#202020</SolidColorBrush>
+            <SolidColorBrush x:Key="leveColor">#FF5C38</SolidColorBrush>
+            <SolidColorBrush x:Key="MouseOverColor">#3D3D3D</SolidColorBrush>
 
             <!--  主窗体  -->
             <Style x:Key="MainWindowStyle" TargetType="{x:Type Window}">
                 <Setter Property="Title" Value="VLCMediaPlayer" />
                 <Setter Property="Width" Value="1200" />
-                <Setter Property="Height" Value="800" />
+                <Setter Property="Height" Value="745" />
                 <Setter Property="ResizeMode" Value="NoResize" />
                 <Setter Property="WindowStyle" Value="None" />
                 <Setter Property="AllowDrop" Value="True" />
@@ -54,9 +56,9 @@
             <!--  输入框  -->
             <Style x:Key="TextStyle" TargetType="{x:Type TextBox}">
                 <Setter Property="Height" Value="25" />
-                <Setter Property="Background" Value="#2A2C37" />
-                <Setter Property="Foreground" Value="#CACCDF" />
-                <Setter Property="CaretBrush" Value="#CACCDF" />
+                <Setter Property="Background" Value="{StaticResource WindowColor}" />
+                <Setter Property="Foreground" Value="{StaticResource FontDominantColor}" />
+                <Setter Property="CaretBrush" Value="{StaticResource FontDominantColor}" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
             </Style>
 
@@ -88,7 +90,7 @@
                 </Style.Setters>
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="#3F3F41" />
+                        <Setter Property="Background" Value="{StaticResource MouseOverColor}" />
                     </Trigger>
                 </Style.Triggers>
             </Style>
@@ -99,14 +101,13 @@
                 TargetType="{x:Type Button}">
                 <Style.Setters>
                     <Setter Property="FontFamily" Value="pack://application:,,,/Resources/#iconfont" />
-                    <Setter Property="FontSize" Value="40" />
-                    <Setter Property="Margin" Value="10,0" />
+                    <Setter Property="FontSize" Value="25" />
                     <Setter Property="Cursor" Value="Hand" />
                 </Style.Setters>
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
                         <Setter Property="Background" Value="Transparent" />
-                        <Setter Property="Foreground" Value="#FF5C38" />
+                        <Setter Property="Foreground" Value="{StaticResource leveColor}" />
                     </Trigger>
                 </Style.Triggers>
             </Style>
@@ -134,7 +135,7 @@
                         <VisualBrush.Visual>
                             <TextBlock
                                 FontStyle="Italic"
-                                Foreground="#CACCDF"
+                                Foreground="{StaticResource FontDominantColor}"
                                 Text="请输入网络地址" />
                         </VisualBrush.Visual>
                     </VisualBrush>
@@ -176,7 +177,7 @@
             </Style>
 
             <Style x:Key="ChkMoreCheckBoxStyle" TargetType="{x:Type CheckBox}">
-                <Setter Property="Foreground" Value="#CACCDF" />
+                <Setter Property="Foreground" Value="{StaticResource FontDominantColor}" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
                 <Setter Property="Height" Value="30" />
                 <Setter Property="Width" Value="50" />
@@ -199,7 +200,7 @@
                         <VisualBrush.Visual>
                             <TextBlock
                                 FontStyle="Italic"
-                                Foreground="#CACCDF"
+                                Foreground="{StaticResource FontDominantColor}"
                                 Text="[0,300]" />
                         </VisualBrush.Visual>
                     </VisualBrush>
@@ -211,6 +212,16 @@
                 </Style.Triggers>
             </Style>
 
+            <Style TargetType="{x:Type Label}">
+                <Setter Property="Foreground" Value="{StaticResource FontDominantColor}" />
+                <Setter Property="FontSize" Value="12" />
+            </Style>
+
+            <Style TargetType="{x:Type CheckBox}">
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="Foreground" Value="{StaticResource FontDominantColor}" />
+                <Setter Property="Cursor" Value="Hand" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:MyVLCMediaPlayer"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="MainWindow"
+    Title="MyVLCMediaPlayer"
     AllowDrop="True"
     DragEnter="Window_DragEnter"
     Drop="Window_Drop"
@@ -32,22 +32,28 @@
                 <Button
                     x:Name="BtnNetworkVideo"
                     Click="BtnNetworkVideo_Click"
-                    Content="  播放网络视频  "
-                    Style="{StaticResource OpenFileButtonStyle}" />
-                <Button
-                    x:Name="BtnOpenFile"
-                    Click="BtnOpenFile_Click"
-                    Content="  打开视频文件  "
-                    Style="{StaticResource OpenFileButtonStyle}" />
+                    Content="  在线视频  "
+                    Style="{StaticResource OpenFileButtonStyle}"
+                    ToolTip="在线视频" />
                 <Button
                     x:Name="BtnOpenFolder"
                     Click="BtnOpenFolder_Click"
-                    Content="  导入播放列表  "
-                    Style="{StaticResource OpenFileButtonStyle}" />
+                    Content="  本地视频  "
+                    Style="{StaticResource OpenFileButtonStyle}"
+                    ToolTip="本地视频" />
+                <CheckBox
+                    x:Name="Loop"
+                    Margin="0,0,5,0"
+                    Checked="Loop_Checked"
+                    Content="循环播放"
+                    ToolTip="循环播放"
+                    Unchecked="Loop_Unchecked" />
                 <Button
-                    x:Name="BtnLoop"
-                    Click="BtnLoop_Click"
-                    Content="  开启循环播放  "
+                    Width="45"
+                    Height="35"
+                    Margin="0,-1,0,0"
+                    Click="BtnMinWindow_Click"
+                    Content="—"
                     Style="{StaticResource OpenFileButtonStyle}" />
                 <Button
                     x:Name="BtnCloseApplication"
@@ -56,8 +62,20 @@
                     Style="{StaticResource ColseButtonStyle}" />
             </StackPanel>
         </Grid>
-        <Grid Grid.Row="1">
-            <VLC:VideoView x:Name="VLCMediaPlayer" IsEnabled="False" />
+        <Grid Grid.Row="1" Panel.ZIndex="-1">
+            <VLC:VideoView
+                x:Name="VLCMediaPlayer"
+                IsEnabled="False"
+                IsHitTestVisible="False">
+                <TextBlock
+                    x:Name="fps"
+                    Margin="10,5"
+                    FontSize="16"
+                    FontWeight="Black"
+                    Foreground="{StaticResource leveColor}"
+                    Text="0 fps"
+                    Visibility="Collapsed" />
+            </VLC:VideoView>
         </Grid>
 
         <Slider Grid.Row="2" Visibility="Collapsed" />
@@ -65,27 +83,46 @@
         <Grid
             x:Name="GdBottom"
             Grid.Row="3"
-            Height="40">
+            Height="35">
             <StackPanel
-                HorizontalAlignment="Center"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Orientation="Horizontal">
                 <Button
-                    x:Name="BtnBackOff"
-                    Click="BtnBackOff_Click"
-                    Content="&#xe866;"
-                    Style="{StaticResource PlayButtonStyle}" />
-                <Button
                     x:Name="BtnPlayOrStop"
+                    Margin="10,0,0,0"
                     Click="BtnPlayOrStop_Click"
                     Content="&#xe864;"
-                    Style="{StaticResource PlayButtonStyle}" />
+                    Style="{StaticResource PlayButtonStyle}"
+                    ToolTip="播放/暂停" />
+                <Button
+                    x:Name="BtnBackOff"
+                    Margin="5,0"
+                    Click="BtnBackOff_Click"
+                    Content="&#xe866;"
+                    Style="{StaticResource PlayButtonStyle}"
+                    ToolTip="快退" />
                 <Button
                     x:Name="BtnFastForward"
                     Click="BtnFastForward_Click"
                     Content="&#xe865;"
-                    Style="{StaticResource PlayButtonStyle}" />
-                <Label x:Name="vlcPosition" />
+                    Style="{StaticResource PlayButtonStyle}"
+                    ToolTip="快进" />
+                <CheckBox
+                    Margin="5,0"
+                    Checked="Fps_Checked"
+                    Content="实时帧"
+                    ToolTip="实时帧"
+                    Unchecked="Fps_UnChecked" />
+            </StackPanel>
+            <StackPanel
+                Margin="0,0,10,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
+                <Label x:Name="MediaPosition" Content="--:--" />
+                <Label Content="/" />
+                <Label x:Name="MediaLenght" Content="--:--" />
             </StackPanel>
         </Grid>
     </Grid>
