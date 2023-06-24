@@ -78,7 +78,13 @@
             </VLC:VideoView>
         </Grid>
 
-        <Slider Grid.Row="2" Visibility="Collapsed" />
+        <Slider
+            x:Name="sd"
+            Grid.Row="2"
+            Style="{StaticResource SliderStyle1}"
+            Thumb.DragDelta="Sd_DragDelta"
+            Thumb.DragStarted="Sd_DragStarted"
+            Visibility="Collapsed" />
 
         <Grid
             x:Name="GdBottom"

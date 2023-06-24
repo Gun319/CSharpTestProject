@@ -15,7 +15,7 @@ namespace MyVLCMediaPlayer
     /// </summary>
     public partial class MainWindow : Window
     {
-        #region 基础属性、字段
+        #region 基础属性、字段、构造/初始化函数
         private readonly IntPtr hWnd = IntPtr.Zero;
 
         /// <summary>
@@ -38,7 +38,10 @@ namespace MyVLCMediaPlayer
         /// </summary>
         private bool IsLoop { get; set; } = false;
 
-        #endregion
+        /// <summary>
+        /// 是否改变进度条进度
+        /// </summary>
+        private bool IsValueChange { get; set; } = true;
 
         public MainWindow()
         {
@@ -78,6 +81,8 @@ namespace MyVLCMediaPlayer
             });
         }
 
+        #endregion
+
         #region VLC内核事件
 
         private void MediaPlayer_Playing(object? sender, EventArgs e)
@@ -87,6 +92,10 @@ namespace MyVLCMediaPlayer
                 BtnPlayOrStop.Content = CommonClass.StringToUnicode("&#xe867;");
 
                 MediaLenght.Content = FormatTime(VLCMediaPlayer.MediaPlayer.Length);
+
+                sd.Visibility = Visibility.Visible;
+                sd.Minimum = 0;
+                sd.Maximum = VLCMediaPlayer.MediaPlayer.Length;
             });
         }
 
@@ -101,6 +110,9 @@ namespace MyVLCMediaPlayer
                 MediaPosition.Content = FormatTime(VLCMediaPlayer.MediaPlayer.Time);
 
                 fps.Text = $"{VLCMediaPlayer.MediaPlayer.Fps} fps";
+
+                if (IsValueChange)
+                    sd.Value = VLCMediaPlayer.MediaPlayer.Time;
             });
         }
 
@@ -134,6 +146,8 @@ namespace MyVLCMediaPlayer
         }
 
         #endregion
+
+        #region 窗口事件
 
         /// <summary>
         /// 快捷键
@@ -182,25 +196,6 @@ namespace MyVLCMediaPlayer
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => DragMove();
 
         /// <summary>
-        /// 全屏调整
-        /// </summary>
-        private void IsFullScreen()
-        {
-            if (WindowState != WindowState.Maximized)
-            {
-                GdTitle.Visibility = GdBottom.Visibility = Visibility.Collapsed;
-                WindowCorner(WindowsCorner.DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_DONOTROUND);
-            }
-            else
-            {
-                GdTitle.Visibility = GdBottom.Visibility = Visibility.Visible;
-                WindowCorner(WindowsCorner.DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUND);
-            }
-
-            WindowState = WindowState is WindowState.Normal ? WindowState.Maximized : WindowState.Normal;
-        }
-
-        /// <summary>
         /// 选择多文件
         /// </summary>
         /// <param name="sender"></param>
@@ -227,20 +222,6 @@ namespace MyVLCMediaPlayer
         }
 
         /// <summary>
-        /// 导入播放列表
-        /// </summary>
-        /// <param name="list"></param>
-        private void ImportPlayerList(List<string> filelist, List<string> nameList)
-        {
-            PlayList = filelist;
-            TitleList = nameList;
-            PlayerIndex = 0;
-            VLCMediaPlayer.MediaPlayer.Play(new Media(CommonClass.VLCMedia, PlayList[PlayerIndex], FromType.FromPath));
-
-            BtnBackOff.Visibility = BtnFastForward.Visibility = Visibility.Visible;
-        }
-
-        /// <summary>
         /// 循环播放模式
         /// </summary>
         /// <param name="sender"></param>
@@ -249,6 +230,8 @@ namespace MyVLCMediaPlayer
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
+                sd.Visibility = Visibility.Collapsed;
+
                 fps.Text = "0 fps";
 
                 // 单文件定义是否循环播放
@@ -341,8 +324,6 @@ namespace MyVLCMediaPlayer
 
         private void Fps_UnChecked(object sender, RoutedEventArgs e) => Dispatcher.BeginInvoke(() => fps.Visibility = Visibility.Collapsed);
 
-        private void BtnStopIcon() => Dispatcher.BeginInvoke(() => BtnPlayOrStop.Content = CommonClass.StringToUnicode("&#xe864;"));
-
         /// <summary>
         /// 退出程序
         /// </summary>
@@ -351,11 +332,6 @@ namespace MyVLCMediaPlayer
         private void BtnCloseApplication_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
 
         private void BtnMinWindow_Click(object sender, RoutedEventArgs e) => Dispatcher.BeginInvoke(() => WindowState = WindowState.Minimized);
-
-        private void WindowCorner(WindowsCorner.DWM_WINDOW_CORNER_PREFERENCE preference)
-        {
-            WindowsCorner.DwmSetWindowAttribute(hWnd, WindowsCorner.DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE, ref preference, sizeof(uint));
-        }
 
         private void Window_Drop(object sender, DragEventArgs e)
         {
@@ -371,12 +347,69 @@ namespace MyVLCMediaPlayer
             ImportPlayerList(list, new List<string> { list[0].Split('\\')[^1] });
         }
 
+        private void Sd_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e) => IsValueChange = false;
+
+        private void Sd_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                VLCMediaPlayer.MediaPlayer.Time = (long)sd.Value;
+                IsValueChange = true;
+            }));
+        }
+
+        #endregion
+
+        #region 私有方法
+
+        /// <summary>
+        /// 导入播放列表
+        /// </summary>
+        /// <param name="list"></param>
+        private void ImportPlayerList(List<string> filelist, List<string> nameList)
+        {
+            PlayList = filelist;
+            TitleList = nameList;
+            PlayerIndex = 0;
+            VLCMediaPlayer.MediaPlayer.Play(new Media(CommonClass.VLCMedia, PlayList[PlayerIndex], FromType.FromPath));
+
+            BtnBackOff.Visibility = BtnFastForward.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// 全屏调整
+        /// </summary>
+        private void IsFullScreen()
+        {
+            if (WindowState != WindowState.Maximized)
+            {
+                sd.Visibility = Visibility.Collapsed;
+                GdTitle.Visibility = GdBottom.Visibility = Visibility.Collapsed;
+                WindowCorner(WindowsCorner.DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_DONOTROUND);
+            }
+            else
+            {
+                sd.Visibility = Visibility.Visible;
+                GdTitle.Visibility = GdBottom.Visibility = Visibility.Visible;
+                WindowCorner(WindowsCorner.DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUND);
+            }
+
+            WindowState = WindowState is WindowState.Normal ? WindowState.Maximized : WindowState.Normal;
+        }
+
+        private void BtnStopIcon() => Dispatcher.BeginInvoke(() => BtnPlayOrStop.Content = CommonClass.StringToUnicode("&#xe864;"));
+
+        private void WindowCorner(WindowsCorner.DWM_WINDOW_CORNER_PREFERENCE preference)
+        {
+            WindowsCorner.DwmSetWindowAttribute(hWnd, WindowsCorner.DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE, ref preference, sizeof(uint));
+        }
+
         /// <summary>
         /// 时间格式化
         /// </summary>
         /// <param name="seconds">传入的毫秒</param>
         /// <returns></returns>
-        public static string FormatTime(long seconds)
+        private static string FormatTime(long seconds)
         {
             float time = seconds / 1000f;
             float hour = MathF.Floor(time / 3600f);
@@ -385,5 +418,7 @@ namespace MyVLCMediaPlayer
 
             return $"{hour:00}:{minute:00}:{second:00}";
         }
+
+        #endregion
     }
 }
