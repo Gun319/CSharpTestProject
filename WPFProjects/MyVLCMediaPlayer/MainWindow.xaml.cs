@@ -7,7 +7,6 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
 
-
 namespace MyVLCMediaPlayer
 {
     /// <summary>
@@ -29,11 +28,6 @@ namespace MyVLCMediaPlayer
         private int PlayerIndex { get; set; } = 0;
 
         /// <summary>
-        /// Title列表
-        /// </summary>
-        private List<string> TitleList { get; set; } = new List<string>(1);
-
-        /// <summary>
         /// 是否循环播放
         /// </summary>
         private bool IsLoop { get; set; } = false;
@@ -42,6 +36,19 @@ namespace MyVLCMediaPlayer
         /// 是否改变进度条进度
         /// </summary>
         private bool IsValueChange { get; set; } = true;
+
+        /// <summary>
+        /// 常用图片后缀名
+        /// </summary>
+        private List<string> ImageSuffix { get; set; } = new List<string>()
+        {
+            "xbm","tif","pjp","svgz","jpg","jpeg","ico","tiff","gif","svg","jfif","webp","png","bmp","pjpeg","avif"
+        };
+
+        /// <summary>
+        /// 媒体文件名称
+        /// </summary>
+        private string MediaMrl = string.Empty;
 
         public MainWindow()
         {
@@ -68,6 +75,7 @@ namespace MyVLCMediaPlayer
                     Volume = 100
                 };
 
+
                 VLCMediaPlayer.MediaPlayer.Playing += MediaPlayer_Playing; // 订阅播放开始事件
                 VLCMediaPlayer.MediaPlayer.Paused += MediaPlayer_Paused; // 订阅播放暂停事件
                 VLCMediaPlayer.MediaPlayer.Stopped += MediaPlayer_Stopped; // 订阅播放停止事件
@@ -91,11 +99,14 @@ namespace MyVLCMediaPlayer
             {
                 BtnPlayOrStop.Content = CommonClass.StringToUnicode("&#xe867;");
 
-                MediaLenght.Content = FormatTime(VLCMediaPlayer.MediaPlayer.Length);
+                if (!ImageSuffix.Contains(MediaMrl.Split('.').Last()))
+                {
+                    sd.Visibility = Visibility.Visible;
+                    sd.Minimum = 0;
+                    sd.Maximum = VLCMediaPlayer.MediaPlayer.Length;
+                }
 
-                sd.Visibility = Visibility.Visible;
-                sd.Minimum = 0;
-                sd.Maximum = VLCMediaPlayer.MediaPlayer.Length;
+                MediaLenght.Content = FormatTime(VLCMediaPlayer.MediaPlayer.Length);
             });
         }
 
@@ -125,8 +136,8 @@ namespace MyVLCMediaPlayer
         {
             Dispatcher.BeginInvoke(() =>
             {
-                if (TitleList.Any())
-                    LabelTitle.Content = $"VLCMediaPlayer - {TitleList[PlayerIndex]}";
+                MediaMrl = System.Web.HttpUtility.UrlDecode(VLCMediaPlayer.MediaPlayer.Media.Mrl).Split('/').Last();
+                LabelTitle.Content = $"VLCMediaPlayer - {MediaMrl}";
             });
         }
 
@@ -213,10 +224,8 @@ namespace MyVLCMediaPlayer
                 if (open.ShowDialog() is true)
                 {
                     List<string> files = new();
-                    List<string> fileNames = new();
                     files.AddRange(open.FileNames);
-                    fileNames.AddRange(open.SafeFileNames);
-                    ImportPlayerList(files, fileNames);
+                    ImportPlayerList(files);
                 }
             }));
         }
@@ -230,32 +239,34 @@ namespace MyVLCMediaPlayer
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                sd.Visibility = Visibility.Collapsed;
+                //sd.Visibility = Visibility.Collapsed;
 
                 fps.Text = "0 fps";
 
-                // 单文件定义是否循环播放
-                if (PlayList.Any() && IsLoop is true)
+                if (PlayList.Any())
                 {
-                    PlayerIndex = ++PlayerIndex % PlayList.Count;
-                    VLCMediaPlayer.MediaPlayer.Play(new Media(CommonClass.VLCMedia, PlayList[PlayerIndex], FromType.FromPath));
-                    return;
+                    // 单文件定义是否循环播放
+                    if (IsLoop is true)
+                    {
+                        PlayerIndex = ++PlayerIndex % PlayList.Count;
+                        VLCMediaPlayer.MediaPlayer.Play(new Media(CommonClass.VLCMedia, PlayList[PlayerIndex], FromType.FromPath));
+                        return;
+                    }
+
+                    #region 多文件播放模式
+
+                    if (IsLoop)
+                    {
+                        PlayerIndex = ++PlayerIndex % PlayList.Count;
+                        VLCMediaPlayer.MediaPlayer.Play(new Media(CommonClass.VLCMedia, PlayList[PlayerIndex], FromType.FromPath));
+                        return;
+                    }
+
+                    PlayerIndex++;
+
+                    if (PlayerIndex < PlayList.Count)
+                        VLCMediaPlayer.MediaPlayer.Play(new Media(CommonClass.VLCMedia, PlayList[PlayerIndex], FromType.FromPath));
                 }
-
-                #region 多文件播放模式
-
-                if (IsLoop)
-                {
-                    PlayerIndex = ++PlayerIndex % PlayList.Count;
-                    VLCMediaPlayer.MediaPlayer.Play(new Media(CommonClass.VLCMedia, PlayList[PlayerIndex], FromType.FromPath));
-                    return;
-                }
-
-                PlayerIndex++;
-
-                if (PlayerIndex < PlayList.Count)
-                    VLCMediaPlayer.MediaPlayer.Play(new Media(CommonClass.VLCMedia, PlayList[PlayerIndex], FromType.FromPath));
-
                 #endregion
             }));
         }
@@ -273,6 +284,8 @@ namespace MyVLCMediaPlayer
         {
             Dispatcher.BeginInvoke(() =>
             {
+                PlayList = new List<string>(1);
+
                 NetworkUrlWindow networkUrlWindow = new();
                 networkUrlWindow.ShowDialog();
                 if (networkUrlWindow.DialogResult is true)
@@ -280,13 +293,16 @@ namespace MyVLCMediaPlayer
                     VLCMediaPlayer.MediaPlayer.Stop();
                     // 测试地址：http://cctvalih5ca.v.myalicdn.com/live/cctv12/index.m3u8
                     //VLCMediaPlayer.MediaPlayer.NetworkCaching = CommonClass.CacheTime == 0 ? 100 : CommonClass.CacheTime;
-                    using Media _media = new(CommonClass.VLCMedia, CommonClass.NetworkUrl, FromType.FromLocation);
+                    using Media _media = new(CommonClass.VLCMedia, CommonClass.NetworkUrl, FromType.FromLocation);                    
                     _media.AddOption(":rtsp-tcp");
+                    _media.AddOption(":no-skip-frames");
+                    _media.AddOption(":cr-average=10000");
                     _media.AddOption(":clock-synchro=0"); // 时钟同步器
                     _media.AddOption(":live-caching=10"); // 实时缓存
                     _media.AddOption($":network-caching={CommonClass.CacheTime}"); // 网络缓存
-                    _media.AddOption(":file-caching=0"); // 文件缓存
-                    _media.AddOption(":grayscale"); // 灰度
+                    _media.AddOption(":file-caching=1500"); // 文件缓存
+                    _media.AddOption(":grayscale"); // 灰度             
+                    
                     VLCMediaPlayer.MediaPlayer.Play(_media);
                 }
                 //BtnBackOff.Visibility = BtnFastForward.Visibility = Visibility.Collapsed;
@@ -335,16 +351,13 @@ namespace MyVLCMediaPlayer
 
         private void Window_Drop(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                e.Effects = DragDropEffects.Link;
-
-            else e.Effects = DragDropEffects.None;
+            var list = (e.Data.GetData(DataFormats.FileDrop) as Array)!.OfType<string>().ToList();
+            ImportPlayerList(list);
         }
 
         private void Window_DragEnter(object sender, DragEventArgs e)
         {
-            List<string>? list = (List<string>)e.Data.GetData(DataFormats.FileDrop);
-            ImportPlayerList(list, new List<string> { list[0].Split('\\')[^1] });
+            e.Effects = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Link : DragDropEffects.None;
         }
 
         private void Sd_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e) => IsValueChange = false;
@@ -366,10 +379,9 @@ namespace MyVLCMediaPlayer
         /// 导入播放列表
         /// </summary>
         /// <param name="list"></param>
-        private void ImportPlayerList(List<string> filelist, List<string> nameList)
+        private void ImportPlayerList(List<string> filelist)
         {
             PlayList = filelist;
-            TitleList = nameList;
             PlayerIndex = 0;
             VLCMediaPlayer.MediaPlayer.Play(new Media(CommonClass.VLCMedia, PlayList[PlayerIndex], FromType.FromPath));
 
