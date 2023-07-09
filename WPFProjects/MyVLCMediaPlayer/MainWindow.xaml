@@ -7,7 +7,6 @@
     xmlns:local="clr-namespace:MyVLCMediaPlayer"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MyVLCMediaPlayer"
-    AllowDrop="True"
     DragEnter="Window_DragEnter"
     Drop="Window_Drop"
     KeyDown="Window_KeyDown"
@@ -15,7 +14,8 @@
     Style="{StaticResource MainWindowStyle}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid AllowDrop="True">
+
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -62,10 +62,11 @@
                     Style="{StaticResource ColseButtonStyle}" />
             </StackPanel>
         </Grid>
+
         <Grid Grid.Row="1" Panel.ZIndex="-1">
             <VLC:VideoView
                 x:Name="VLCMediaPlayer"
-                IsEnabled="False"
+                IsEnabled="False" 
                 IsHitTestVisible="False">
                 <TextBlock
                     x:Name="fps"

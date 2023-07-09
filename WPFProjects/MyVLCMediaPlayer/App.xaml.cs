@@ -80,11 +80,11 @@ namespace MyVLCMediaPlayer
             SplashScreen splash = new("/Resources/LaunchPreview.jpg");
             splash.Show(true);
 
-            Task.Factory.StartNew(() =>
+            Task.Run(() =>
             {
                 Core.Initialize();
                 Commons.CommonClass.VLCMedia = new LibVLC("--avcodec-hw=any");
-            });
+            }); 
         }
     }
 }

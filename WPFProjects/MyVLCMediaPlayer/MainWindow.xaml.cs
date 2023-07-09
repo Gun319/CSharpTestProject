@@ -38,14 +38,6 @@ namespace MyVLCMediaPlayer
         private bool IsValueChange { get; set; } = true;
 
         /// <summary>
-        /// 常用图片后缀名
-        /// </summary>
-        private List<string> ImageSuffix { get; set; } = new List<string>()
-        {
-            "xbm","tif","pjp","svgz","jpg","jpeg","ico","tiff","gif","svg","jfif","webp","png","bmp","pjpeg","avif"
-        };
-
-        /// <summary>
         /// 媒体文件名称
         /// </summary>
         private string MediaMrl = string.Empty;
@@ -54,9 +46,13 @@ namespace MyVLCMediaPlayer
         {
             InitializeComponent();
 
-            Init();
-
             hWnd = new WindowInteropHelper(GetWindow(this)).EnsureHandle(); // 获取当前窗口句柄
+
+            Task.Run(() =>
+            {
+                Init();
+            });
+
             if (WindowsCorner.OSVersion())
             {
                 WindowCorner(WindowsCorner.DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUND);
@@ -68,13 +64,12 @@ namespace MyVLCMediaPlayer
         /// </summary>
         private void Init()
         {
-            Dispatcher.BeginInvoke(() =>
+            Dispatcher.BeginInvoke(new Action(() =>
             {
                 VLCMediaPlayer.MediaPlayer = new MediaPlayer(CommonClass.VLCMedia)
                 {
                     Volume = 100
                 };
-
 
                 VLCMediaPlayer.MediaPlayer.Playing += MediaPlayer_Playing; // 订阅播放开始事件
                 VLCMediaPlayer.MediaPlayer.Paused += MediaPlayer_Paused; // 订阅播放暂停事件
@@ -86,7 +81,7 @@ namespace MyVLCMediaPlayer
                 VLCMediaPlayer.MediaPlayer.Buffering += MediaPlayer_Buffering; // 订阅缓冲事件
                 VLCMediaPlayer.MediaPlayer.Corked += MediaPlayer_Corked; // 订阅播放器阻塞事件
                 VLCMediaPlayer.MediaPlayer.Uncorked += MediaPlayer_Uncorked; // 订阅播放器非阻塞事件
-            });
+            }));
         }
 
         #endregion
@@ -99,12 +94,9 @@ namespace MyVLCMediaPlayer
             {
                 BtnPlayOrStop.Content = CommonClass.StringToUnicode("&#xe867;");
 
-                if (!ImageSuffix.Contains(MediaMrl.Split('.').Last()))
-                {
-                    sd.Visibility = Visibility.Visible;
-                    sd.Minimum = 0;
-                    sd.Maximum = VLCMediaPlayer.MediaPlayer.Length;
-                }
+                sd.Visibility = Visibility.Visible;
+                sd.Minimum = 0;
+                sd.Maximum = VLCMediaPlayer.MediaPlayer.Length;
 
                 MediaLenght.Content = FormatTime(VLCMediaPlayer.MediaPlayer.Length);
             });
@@ -293,7 +285,7 @@ namespace MyVLCMediaPlayer
                     VLCMediaPlayer.MediaPlayer.Stop();
                     // 测试地址：http://cctvalih5ca.v.myalicdn.com/live/cctv12/index.m3u8
                     //VLCMediaPlayer.MediaPlayer.NetworkCaching = CommonClass.CacheTime == 0 ? 100 : CommonClass.CacheTime;
-                    using Media _media = new(CommonClass.VLCMedia, CommonClass.NetworkUrl, FromType.FromLocation);                    
+                    using Media _media = new(CommonClass.VLCMedia, CommonClass.NetworkUrl, FromType.FromLocation);
                     _media.AddOption(":rtsp-tcp");
                     _media.AddOption(":no-skip-frames");
                     _media.AddOption(":cr-average=10000");
@@ -302,7 +294,7 @@ namespace MyVLCMediaPlayer
                     _media.AddOption($":network-caching={CommonClass.CacheTime}"); // 网络缓存
                     _media.AddOption(":file-caching=1500"); // 文件缓存
                     _media.AddOption(":grayscale"); // 灰度             
-                    
+
                     VLCMediaPlayer.MediaPlayer.Play(_media);
                 }
                 //BtnBackOff.Visibility = BtnFastForward.Visibility = Visibility.Collapsed;
@@ -395,13 +387,14 @@ namespace MyVLCMediaPlayer
         {
             if (WindowState != WindowState.Maximized)
             {
-                sd.Visibility = Visibility.Collapsed;
-                GdTitle.Visibility = GdBottom.Visibility = Visibility.Collapsed;
+                sd.Visibility = GdTitle.Visibility = GdBottom.Visibility = Visibility.Collapsed;
                 WindowCorner(WindowsCorner.DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_DONOTROUND);
             }
             else
             {
-                sd.Visibility = Visibility.Visible;
+                if (VLCMediaPlayer.MediaPlayer.IsPlaying)
+                    sd.Visibility = Visibility.Visible;
+
                 GdTitle.Visibility = GdBottom.Visibility = Visibility.Visible;
                 WindowCorner(WindowsCorner.DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUND);
             }
