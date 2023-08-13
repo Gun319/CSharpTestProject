@@ -48,15 +48,10 @@ namespace MyVLCMediaPlayer
 
             hWnd = new WindowInteropHelper(GetWindow(this)).EnsureHandle(); // 获取当前窗口句柄
 
-            Task.Run(() =>
-            {
-                Init();
-            });
+            Init();
 
             if (WindowsCorner.OSVersion())
-            {
                 WindowCorner(WindowsCorner.DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUND);
-            }
         }
 
         /// <summary>
@@ -64,24 +59,27 @@ namespace MyVLCMediaPlayer
         /// </summary>
         private void Init()
         {
-            Dispatcher.BeginInvoke(new Action(() =>
+            Task.Run(() =>
             {
-                VLCMediaPlayer.MediaPlayer = new MediaPlayer(CommonClass.VLCMedia)
+                Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    Volume = 100
-                };
+                    VLCMediaPlayer.MediaPlayer = new MediaPlayer(CommonClass.VLCMedia)
+                    {
+                        Volume = 100
+                    };
 
-                VLCMediaPlayer.MediaPlayer.Playing += MediaPlayer_Playing; // 订阅播放开始事件
-                VLCMediaPlayer.MediaPlayer.Paused += MediaPlayer_Paused; // 订阅播放暂停事件
-                VLCMediaPlayer.MediaPlayer.Stopped += MediaPlayer_Stopped; // 订阅播放停止事件
-                VLCMediaPlayer.MediaPlayer.EndReached += MediaPlayer_EndReached; // 订阅播放结束事件
-                VLCMediaPlayer.MediaPlayer.PositionChanged += MediaPlayer_PositionChanged; // 订阅已播放时间事件
-                VLCMediaPlayer.MediaPlayer.EncounteredError += MediaPlayer_EncounteredError; // 订阅播放错误事件
-                VLCMediaPlayer.MediaPlayer.MediaChanged += MediaPlayer_MediaChanged; // 订阅媒体改变事件
-                VLCMediaPlayer.MediaPlayer.Buffering += MediaPlayer_Buffering; // 订阅缓冲事件
-                VLCMediaPlayer.MediaPlayer.Corked += MediaPlayer_Corked; // 订阅播放器阻塞事件
-                VLCMediaPlayer.MediaPlayer.Uncorked += MediaPlayer_Uncorked; // 订阅播放器非阻塞事件
-            }));
+                    VLCMediaPlayer.MediaPlayer.Playing += MediaPlayer_Playing; // 订阅播放开始事件
+                    VLCMediaPlayer.MediaPlayer.Paused += MediaPlayer_Paused; // 订阅播放暂停事件
+                    VLCMediaPlayer.MediaPlayer.Stopped += MediaPlayer_Stopped; // 订阅播放停止事件
+                    VLCMediaPlayer.MediaPlayer.EndReached += MediaPlayer_EndReached; // 订阅播放结束事件
+                    VLCMediaPlayer.MediaPlayer.PositionChanged += MediaPlayer_PositionChanged; // 订阅已播放时间事件
+                    VLCMediaPlayer.MediaPlayer.EncounteredError += MediaPlayer_EncounteredError; // 订阅播放错误事件
+                    VLCMediaPlayer.MediaPlayer.MediaChanged += MediaPlayer_MediaChanged; // 订阅媒体改变事件
+                    VLCMediaPlayer.MediaPlayer.Buffering += MediaPlayer_Buffering; // 订阅缓冲事件
+                    VLCMediaPlayer.MediaPlayer.Corked += MediaPlayer_Corked; // 订阅播放器阻塞事件
+                    VLCMediaPlayer.MediaPlayer.Uncorked += MediaPlayer_Uncorked; // 订阅播放器非阻塞事件
+                }));
+            });
         }
 
         #endregion
@@ -292,8 +290,8 @@ namespace MyVLCMediaPlayer
                     _media.AddOption(":clock-synchro=0"); // 时钟同步器
                     _media.AddOption(":live-caching=10"); // 实时缓存
                     _media.AddOption($":network-caching={CommonClass.CacheTime}"); // 网络缓存
-                    _media.AddOption(":file-caching=1500"); // 文件缓存
-                    _media.AddOption(":grayscale"); // 灰度             
+                    _media.AddOption(":file-caching=2000"); // 文件缓存
+                    //_media.AddOption(":grayscale"); // 灰度             
 
                     VLCMediaPlayer.MediaPlayer.Play(_media);
                 }

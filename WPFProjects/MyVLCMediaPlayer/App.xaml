@@ -13,6 +13,7 @@
 
             <!--  主窗体  -->
             <Style x:Key="MainWindowStyle" TargetType="{x:Type Window}">
+                <Setter Property="FontWeight" Value="Light" />
                 <Setter Property="Title" Value="VLCMediaPlayer" />
                 <Setter Property="ResizeMode" Value="NoResize" />
                 <Setter Property="WindowStyle" Value="None" />

@@ -83,7 +83,7 @@ namespace MyVLCMediaPlayer
             Task.Run(() =>
             {
                 Core.Initialize();
-                Commons.CommonClass.VLCMedia = new LibVLC("--avcodec-hw=any");
+                Commons.CommonClass.VLCMedia = new LibVLC("--vout=direct2d");
             }); 
         }
     }

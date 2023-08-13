@@ -26,7 +26,7 @@ namespace MyVLCMediaPlayer.Commons
         /// <summary>
         /// 缓存时长
         /// </summary>
-        public static int CacheTime { get; set; } = 1500;
+        public static int CacheTime { get; set; } = 2000;
 
         /// <summary>  
         /// 字符串转为UniCode码字符串 &#xea88;
