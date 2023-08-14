@@ -1,0 +1,19 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="WindowsTitle">MainWindow</sys:String>
+    <ImageSource x:Key="icon">pack://SiteOfOrigin:,,,/Icons/en-USicon.png</ImageSource>
+    <sys:String x:Key="LanguageButton">LanguageButton</sys:String>
+
+    <sys:String x:Key="LockTime-OneMinute">1 Minute</sys:String>
+    <sys:String x:Key="LockTime-FiveMinute">5 Minute</sys:String>
+    <sys:String x:Key="LockTime-TenMinute">10 Minute</sys:String>
+    <sys:String x:Key="LockTime-FifteenMinute">15 Minute</sys:String>
+    <sys:String x:Key="LockTime-ThirtyMinute">30 Minute</sys:String>
+    <sys:String x:Key="LockTime-OneHour">1 Hour</sys:String>
+    <sys:String x:Key="LockTime-TwoHour">2 Hour</sys:String>
+    <sys:String x:Key="LockTime-ThreeHour">3 Hour</sys:String>
+    <sys:String x:Key="LockTime-Never">Never</sys:String>
+</ResourceDictionary>
