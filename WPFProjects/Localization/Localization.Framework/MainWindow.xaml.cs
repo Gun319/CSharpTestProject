@@ -99,7 +99,7 @@ namespace Localization.Framework
             List<ListBoxTest> strs = new List<ListBoxTest>();
             if (Directory.Exists(dirpath))
             {
-                strs.AddRange(new DirectoryInfo(dirpath).GetFiles("*.png").Select(item => new ListBoxTest
+                strs.AddRange(new DirectoryInfo(dirpath).GetFiles("*.jpg").Select(item => new ListBoxTest
                 {
                     ImageSource = item.FullName
                 }));

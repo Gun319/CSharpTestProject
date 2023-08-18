@@ -66,7 +66,7 @@
             </ComboBox>
         </StackPanel>
 
-        <Grid ge:GridEx.ColumnDefinition="*,*" ge:GridEx.TemplateArea="left right">
+        <Grid ge:GridEx.ColumnDefinition=".2*,*" ge:GridEx.TemplateArea="left right">
             <Button
                 x:Name="btnAdd"
                 HorizontalAlignment="Center"
