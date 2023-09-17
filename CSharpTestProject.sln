@@ -57,6 +57,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Localization.Framework", "W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCVSharp.Study", "WPFProjects\OpenCVSharp.Study\OpenCVSharp.Study.csproj", "{32E6A8C7-2598-462A-84E9-C55045243CCA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProcessing", "WPFProjects\ImageProcessing\ImageProcessing.csproj", "{94711F06-602E-4C7D-9858-3150B9A23FE5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -141,6 +143,10 @@ Global
 		{32E6A8C7-2598-462A-84E9-C55045243CCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32E6A8C7-2598-462A-84E9-C55045243CCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32E6A8C7-2598-462A-84E9-C55045243CCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94711F06-602E-4C7D-9858-3150B9A23FE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94711F06-602E-4C7D-9858-3150B9A23FE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94711F06-602E-4C7D-9858-3150B9A23FE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94711F06-602E-4C7D-9858-3150B9A23FE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -167,6 +173,7 @@ Global
 		{F865739D-576D-4EB4-BD85-5B9AE1CB3A9C} = {B0E64EE6-BB99-48CA-9CD6-9AAE631D82C7}
 		{AFD9C702-C53B-44B2-9A48-9F79953B9F54} = {B0E64EE6-BB99-48CA-9CD6-9AAE631D82C7}
 		{32E6A8C7-2598-462A-84E9-C55045243CCA} = {B0824C9A-86C7-4366-B19B-1C7E2E281AA0}
+		{94711F06-602E-4C7D-9858-3150B9A23FE5} = {B0824C9A-86C7-4366-B19B-1C7E2E281AA0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A05443A2-A688-4C83-81B3-F8159BB5C11C}

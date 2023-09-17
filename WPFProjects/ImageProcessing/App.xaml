@@ -1,0 +1,140 @@
+﻿<Application
+    x:Class="ImageProcessing.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:ImageProcessing"
+    StartupUri="Views/ShellView.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries />
+
+            <Color x:Key="themeColor">#1f1f1f</Color>
+
+            <ImageSource x:Key="icon">pack://SiteOfOrigin:,,,/icon.ico</ImageSource>
+
+            <Style x:Key="WindowTitleBarButtonStyle" TargetType="{x:Type Button}">
+                <Setter Property="Height" Value="32" />
+                <Setter Property="Width" Value="45" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Content="{TemplateBinding Content}" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style
+                x:Key="MinimizeButtonStyle"
+                BasedOn="{StaticResource WindowTitleBarButtonStyle}"
+                TargetType="{x:Type Button}">
+                <Setter Property="ToolTip" Value="最小化" />
+                <Setter Property="Clip" Value="M928.2 548h-832c-17.7 0-32-14.3-32-32s14.3-32 32-32h832c17.7 0 32 14.3 32 32s-14.3 32-32 32z" />
+                <Setter Property="Foreground" Value="#515151" />
+            </Style>
+
+            <Style x:Key="ShellViewStyle" TargetType="{x:Type Window}">
+                <Setter Property="WindowChrome.WindowChrome">
+                    <Setter.Value>
+                        <WindowChrome
+                            CaptionHeight="{Binding Path=(SystemParameters.WindowNonClientFrameThickness).Top}"
+                            GlassFrameThickness="1"
+                            NonClientFrameEdges="None"
+                            ResizeBorderThickness="5"
+                            UseAeroCaptionButtons="False" />
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Icon" Value="{DynamicResource icon}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Window}">
+                            <Border
+                                x:Name="WindowBorder"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+
+                                <Grid x:Name="LayoutRoot">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+
+                                    <Grid
+                                        x:Name="WindowTitlePanel"
+                                        Grid.Row="0"
+                                        Height="{Binding Path=(SystemParameters.WindowNonClientFrameThickness).Top}"
+                                        Background="AliceBlue">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image
+                                                Width="{x:Static SystemParameters.SmallIconWidth}"
+                                                Height="{x:Static SystemParameters.SmallIconHeight}"
+                                                Margin="5,0"
+                                                Source="{TemplateBinding Icon}"
+                                                WindowChrome.IsHitTestVisibleInChrome="True" />
+                                            <ContentControl
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Content="{TemplateBinding Title}"
+                                                FontSize="{x:Static SystemFonts.CaptionFontSize}"
+                                                IsTabStop="False" />
+                                        </StackPanel>
+
+                                        <StackPanel
+                                            x:Name="WindowCommandButtonsPanel"
+                                            Grid.Column="1"
+                                            Margin="0,0,-1,0"
+                                            HorizontalAlignment="Right"
+                                            Orientation="Horizontal"
+                                            WindowChrome.IsHitTestVisibleInChrome="True">
+                                            <!--<ContentControl Content="{Binding FunctionBar, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />-->
+                                            <Button x:Name="MinimizeButton" Style="{DynamicResource MinimizeButtonStyle}" />
+                                            <Grid Margin="1,0">
+                                                <Button x:Name="RestoreButton" Visibility="Collapsed" />
+                                                <Button x:Name="MaximizeButton" />
+                                            </Grid>
+                                            <Button x:Name="CloseButton" />
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <Grid Grid.Row="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="28" />
+                                        </Grid.RowDefinitions>
+                                        <AdornerDecorator KeyboardNavigation.IsTabStop="False">
+                                            <ContentControl KeyboardNavigation.TabNavigation="Cycle" />
+                                        </AdornerDecorator>
+                                        <Grid Grid.Row="1" Background="Red">
+                                            <ResizeGrip
+                                                x:Name="ResizeGrip"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Bottom"
+                                                IsTabStop="False"
+                                                Visibility="Collapsed" />
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="WindowState" Value="Maximized">
+                                    <Setter TargetName="LayoutRoot" Property="Margin" Value="7" />
+                                </Trigger>
+                                <Trigger Property="WindowState" Value="Normal">
+                                    <Setter TargetName="ResizeGrip" Property="Visibility" Value="Visible" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
