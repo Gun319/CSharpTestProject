@@ -17,9 +17,7 @@ using OpenCvSharp;
 
 namespace ImageProcessing.ViewModels
 {
-
-
-    public partial class UserControlViewModel : ViewModelBase
+    public partial class BusinessControlViewModel : ViewModelBase
     {
         #region 通知属性、私有属性、命令、变量
 
@@ -77,37 +75,22 @@ namespace ImageProcessing.ViewModels
         [ObservableProperty]
         private int _stuckThreshold;
 
-        public AsyncRelayCommand ImportCommand { get; set; }
-        public AsyncRelayCommand StartSynthesisCommand { get; set; }
-        public AsyncRelayCommand<ListBox> PreviewCommand { get; set; }
-        public AsyncRelayCommand<TextBlock> OpenImageLocationCommand { get; set; }
-        public AsyncRelayCommand<TextBlock> OpenFinishProductCommand { get; set; }
-        public AsyncRelayCommand<DragEventArgs> DragEnterCommand { get; set; }
-        public AsyncRelayCommand<DragEventArgs> DropCommand { get; set; }
-
         private VideoWriter? _videoWriter;
 
         #endregion
 
-        public UserControlViewModel()
+        public BusinessControlViewModel()
         {
             SourceMaterialList = new ObservableCollection<SourceMaterials>();
             FinishProductsList = new ObservableCollection<FinishProducts>();
 
             BindingOperations.EnableCollectionSynchronization(SourceMaterialList, this);
             BindingOperations.EnableCollectionSynchronization(FinishProductsList, this);
-
-            ImportCommand = new AsyncRelayCommand(Import);
-            StartSynthesisCommand = new AsyncRelayCommand(StartSynthesis);
-            PreviewCommand = new AsyncRelayCommand<ListBox>(Preview!);
-            OpenImageLocationCommand = new AsyncRelayCommand<TextBlock>(OpenImageLocation!);
-            OpenFinishProductCommand = new AsyncRelayCommand<TextBlock>(OpenFinishProduct!);
-            DragEnterCommand = new AsyncRelayCommand<DragEventArgs>(DragEnter!);
-            DropCommand = new AsyncRelayCommand<DragEventArgs>(Drop!);
         }
 
         #region Command Methods
 
+        [RelayCommand]
         private Task Import()
         {
             OpenFileDialog(true);
@@ -115,6 +98,7 @@ namespace ImageProcessing.ViewModels
             return Task.CompletedTask;
         }
 
+        [RelayCommand]
         private Task StartSynthesis()
         {
             if (!FileChecked("发现您未导入素材，请先导入素材")) return Task.CompletedTask;
@@ -137,11 +121,14 @@ namespace ImageProcessing.ViewModels
                 VideoSynthesis();
             }
             else
+            {
                 LoadingVisibility = Visibility.Collapsed;
+            }
 
             return Task.CompletedTask;
         }
 
+        [RelayCommand]
         private Task Preview(ListBox parameter)
         {
             if (parameter.SelectedItem is not null)
@@ -152,6 +139,7 @@ namespace ImageProcessing.ViewModels
             return Task.CompletedTask;
         }
 
+        [RelayCommand]
         private Task OpenImageLocation(TextBlock parameter)
         {
             if (parameter.Tag is not null)
@@ -160,6 +148,7 @@ namespace ImageProcessing.ViewModels
             return Task.CompletedTask;
         }
 
+        [RelayCommand]
         private Task OpenFinishProduct(TextBlock parameter)
         {
             if (!string.IsNullOrWhiteSpace(parameter.Text))
@@ -168,6 +157,7 @@ namespace ImageProcessing.ViewModels
             return Task.CompletedTask;
         }
 
+        [RelayCommand]
         private Task DragEnter(DragEventArgs parameter)
         {
             parameter.Effects = parameter.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Link : DragDropEffects.None;
@@ -175,6 +165,7 @@ namespace ImageProcessing.ViewModels
             return Task.CompletedTask;
         }
 
+        [RelayCommand]
         private Task Drop(DragEventArgs parameter)
         {
             string videoFilePath = (parameter.Data.GetData(DataFormats.FileDrop) as Array)!.OfType<string>().ToList().FirstOrDefault()!;
@@ -272,7 +263,7 @@ namespace ImageProcessing.ViewModels
         /// </summary>
         /// <param name="folderBrowse">是否文件夹浏览</param>
         /// <returns></returns>
-        private string OpenFileDialog(bool folderBrowse = false)
+        private static string OpenFileDialog(bool folderBrowse = false)
         {
             string path = string.Empty;
             Microsoft.WindowsAPICodePack.Dialogs.CommonOpenFileDialog folderBrowser = new()
@@ -289,12 +280,13 @@ namespace ImageProcessing.ViewModels
         /// <summary>
         /// 定位文件位置
         /// </summary>
-        private void PositioningFile(string filePath) => System.Diagnostics.Process.Start("explorer.exe", $"/select,{filePath}");
+        private static void PositioningFile(string filePath) => System.Diagnostics.Process.Start("explorer.exe", $"/select,{filePath}");
         #endregion
 
         #region 图片异步加载
 
         List<SourceMaterials> strings = new();
+        private readonly object _lockObject = new();
 
         private void ImageShowe(string path)
         {
@@ -313,7 +305,7 @@ namespace ImageProcessing.ViewModels
         {
             Task.Run(() =>
             {
-                lock (this)
+                lock (_lockObject)
                 {
                     foreach (var item in strings)
                     {
@@ -329,14 +321,14 @@ namespace ImageProcessing.ViewModels
             });
         }
 
-        private List<SourceMaterials> LoadDir(string dirPath)
+        private static List<SourceMaterials> LoadDir(string dirPath)
         {
             List<SourceMaterials> images = new();
 
             if (Directory.Exists(dirPath))
             {
                 images.AddRange(new DirectoryInfo(dirPath)
-                    .GetFiles($"*.bmp").OrderBy(o => o.FullName)
+                    .GetFiles("*.bmp").OrderBy(o => o.FullName)
                     .Select(item => new SourceMaterials
                     {
                         FilePath = item.FullName

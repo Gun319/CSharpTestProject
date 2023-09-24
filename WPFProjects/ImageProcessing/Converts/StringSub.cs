@@ -15,7 +15,6 @@ namespace ImageProcessing.Converts
                 return valueNames[^1];
             else
                 return $"{valueNames[^1][..10]}…";
-
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

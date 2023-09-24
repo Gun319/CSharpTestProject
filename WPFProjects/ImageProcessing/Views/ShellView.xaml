@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:ImageProcessing"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:ImageProcessing.ViewModels"
-    Title="MainWindow"
+    Title="{Binding Title}"
     Width="800"
     Height="450"
     d:DataContext="{d:DesignInstance Type=viewmodels:ShellViewModel}"
