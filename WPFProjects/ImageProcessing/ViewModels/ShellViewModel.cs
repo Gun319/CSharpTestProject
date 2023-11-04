@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 using System.Windows.Input;
 
@@ -8,12 +9,13 @@ namespace ImageProcessing.ViewModels
     public partial class ShellViewModel : ViewModelBase
     {
         [ObservableProperty]
-        private object _viewModelContent;
+        private UIElement _currentViewModel;
 
         private readonly Window _window;
         public ShellViewModel()
         {
-            ViewModelContent = new BusinessControlViewModel();
+            //CurrentViewModel = App.Current.Services.GetService<Views.ImageSynthesisVideoView>()!;
+            CurrentViewModel = App.Current.Services.GetService<Views.MatchTemplateView>()!;
             _window = Application.Current.MainWindow;
         }
 

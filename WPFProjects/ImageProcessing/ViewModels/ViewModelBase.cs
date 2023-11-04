@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Windows;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace ImageProcessing.ViewModels
 {
@@ -9,7 +10,7 @@ namespace ImageProcessing.ViewModels
 
         public ViewModelBase()
         {
-            Title = "MainWindow";
+            Title = Application.Current.Resources["WindowTitle"].ToString()!;
         }
     }
 }

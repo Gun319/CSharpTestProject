@@ -17,7 +17,7 @@ using OpenCvSharp;
 
 namespace ImageProcessing.ViewModels
 {
-    public partial class BusinessControlViewModel : ViewModelBase
+    public partial class ImageSynthesisVideoViewModel : ViewModelBase
     {
         #region 通知属性、私有属性、命令、变量
 
@@ -79,7 +79,7 @@ namespace ImageProcessing.ViewModels
 
         #endregion
 
-        public BusinessControlViewModel()
+        public ImageSynthesisVideoViewModel()
         {
             SourceMaterialList = new ObservableCollection<SourceMaterials>();
             FinishProductsList = new ObservableCollection<FinishProducts>();
@@ -93,7 +93,7 @@ namespace ImageProcessing.ViewModels
         [RelayCommand]
         private Task Import()
         {
-            OpenFileDialog(true);
+            SourceMaterialPath = OpenFileDialog(true);
 
             return Task.CompletedTask;
         }
@@ -140,7 +140,7 @@ namespace ImageProcessing.ViewModels
         }
 
         [RelayCommand]
-        private Task OpenImageLocation(TextBlock parameter)
+        private static Task OpenImageLocation(TextBlock parameter)
         {
             if (parameter.Tag is not null)
                 PositioningFile(parameter.Tag.ToString()!);
@@ -149,7 +149,7 @@ namespace ImageProcessing.ViewModels
         }
 
         [RelayCommand]
-        private Task OpenFinishProduct(TextBlock parameter)
+        private static Task OpenFinishProduct(TextBlock parameter)
         {
             if (!string.IsNullOrWhiteSpace(parameter.Text))
                 PositioningFile(parameter.Text);
@@ -158,7 +158,7 @@ namespace ImageProcessing.ViewModels
         }
 
         [RelayCommand]
-        private Task DragEnter(DragEventArgs parameter)
+        private static Task DragEnter(DragEventArgs parameter)
         {
             parameter.Effects = parameter.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Link : DragDropEffects.None;
 
