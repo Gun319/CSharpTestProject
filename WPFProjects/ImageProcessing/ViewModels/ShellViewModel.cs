@@ -9,13 +9,19 @@ namespace ImageProcessing.ViewModels
     public partial class ShellViewModel : ViewModelBase
     {
         [ObservableProperty]
-        private UIElement _currentViewModel;
+        private UIElement? _currentViewModel;
+
+        [ObservableProperty]
+        private UIElement _itemMenuView;
+
+        [ObservableProperty]
+        private string? _menuAction;
 
         private readonly Window _window;
         public ShellViewModel()
         {
-            //CurrentViewModel = App.Current.Services.GetService<Views.ImageSynthesisVideoView>()!;
-            CurrentViewModel = App.Current.Services.GetService<Views.MatchTemplateView>()!;
+            ItemMenuView = App.Current.Services.GetService<Views.Controls.ItemMenuView>()!;
+
             _window = Application.Current.MainWindow;
         }
 

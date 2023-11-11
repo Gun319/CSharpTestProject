@@ -15,7 +15,7 @@ using ImageProcessing.Operates;
 using Microsoft.Win32;
 using OpenCvSharp;
 
-namespace ImageProcessing.ViewModels
+namespace ImageProcessing.ViewModels.Business
 {
     public partial class ImageSynthesisVideoViewModel : ViewModelBase
     {
@@ -103,7 +103,7 @@ namespace ImageProcessing.ViewModels
         {
             if (!FileChecked("发现您未导入素材，请先导入素材")) return Task.CompletedTask;
 
-            SaveFileDialog saveFile = new()
+            SaveFileDialog? saveFile = new()
             {
                 AddExtension = true,
                 CheckPathExists = true,

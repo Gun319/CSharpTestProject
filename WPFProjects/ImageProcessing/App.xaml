@@ -88,6 +88,7 @@
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
 
+                                    <!--#region 标题栏-->
                                     <Grid
                                         x:Name="WindowTitlePanel"
                                         Grid.Row="0"
@@ -97,6 +98,8 @@
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
+
+                                        <!--#region 标题-->
                                         <StackPanel Orientation="Horizontal">
                                             <Image
                                                 Width="{x:Static SystemParameters.SmallIconWidth}"
@@ -120,7 +123,9 @@
                                                 FontSize="{x:Static SystemFonts.CaptionFontSize}"
                                                 IsTabStop="False" />
                                         </StackPanel>
+                                        <!--#endregion 标题-->
 
+                                        <!--#region 系统功能键-->
                                         <StackPanel
                                             x:Name="WindowCommandButtonsPanel"
                                             Grid.Column="1"
@@ -147,29 +152,50 @@
                                                 Command="{Binding CloseWindowCommand}"
                                                 Style="{DynamicResource CloseButtonStyle}" />
                                         </StackPanel>
+                                        <!--#endregion 系统功能键-->
                                     </Grid>
+                                    <!--#endregion 标题栏-->
 
+                                    <!--#region 内容-->
                                     <Grid Grid.Row="1" Background="{TemplateBinding Background}">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="*" />
                                             <RowDefinition Height="28" />
                                         </Grid.RowDefinitions>
+                                        <!--  工作区  -->
                                         <AdornerDecorator KeyboardNavigation.IsTabStop="False">
-                                            <ContentControl
-                                                HorizontalAlignment="Stretch"
-                                                VerticalAlignment="Stretch"
-                                                Content="{Binding CurrentViewModel}"
-                                                KeyboardNavigation.TabNavigation="Cycle" />
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="150" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <!--  导航栏  -->
+                                                <UserControl Content="{Binding ItemMenuView}" />
+                                                <!--  功能区  -->
+                                                <ContentControl
+                                                    Grid.Column="1"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Stretch"
+                                                    Content="{Binding CurrentViewModel}"
+                                                    KeyboardNavigation.TabNavigation="Cycle" />
+                                            </Grid>
                                         </AdornerDecorator>
+
+                                        <!--  状态栏  -->
                                         <Grid Grid.Row="1" Background="{DynamicResource themeColor}">
-                                            <Path
-                                                Width="10"
-                                                Height="10"
-                                                Margin="10,0,0,0"
-                                                HorizontalAlignment="Left"
-                                                Data="{DynamicResource Success}"
-                                                Fill="LawnGreen"
-                                                Stretch="UniformToFill" />
+                                            <StackPanel Orientation="Horizontal">
+                                                <Path
+                                                    Width="10"
+                                                    Height="10"
+                                                    Margin="10,0"
+                                                    Data="{DynamicResource Success}"
+                                                    Fill="LawnGreen"
+                                                    Stretch="UniformToFill" />
+                                                <TextBlock
+                                                    VerticalAlignment="Center"
+                                                    Foreground="{DynamicResource MouseOverBackground}"
+                                                    Text="{Binding MenuAction}" />
+                                            </StackPanel>
                                             <ResizeGrip
                                                 x:Name="ResizeGrip"
                                                 HorizontalAlignment="Right"
@@ -178,6 +204,7 @@
                                                 Visibility="Collapsed" />
                                         </Grid>
                                     </Grid>
+                                    <!--#endregion 内容-->
                                 </Grid>
                             </Border>
                             <ControlTemplate.Triggers>
@@ -304,7 +331,7 @@
                                 <StackPanel Margin="5">
                                     <Image Width="90">
                                         <Image.Source>
-                                            <BitmapImage DecodePixelWidth="90" UriSource="{Binding ImageName}" />
+                                            <BitmapImage DecodePixelWidth="90" UriSource="{Binding ImageName, TargetNullValue={x:Null}}" />
                                         </Image.Source>
                                     </Image>
                                     <TextBlock
@@ -378,6 +405,42 @@
                 <Setter Property="Cursor" Value="Hand" />
                 <Setter Property="FontSize" Value="12" />
                 <Setter Property="Foreground" Value="#0078D4" />
+            </Style>
+
+            <Style x:Key="lbListBoxItemMenuStyle" TargetType="{x:Type ListBoxItem}">
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="Width" Value="150" />
+                <Setter Property="Height" Value="40" />
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="Foreground" Value="#000" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListBoxItem">
+                            <Border
+                                x:Name="itemMenuBorder"
+                                Width="{TemplateBinding Width}"
+                                Height="{TemplateBinding Height}"
+                                VerticalAlignment="Center"
+                                Background="{TemplateBinding Background}">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    Text="{Binding MenuName}" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="#D5DFE5" />
+                    </Trigger>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="#D5DFE5" />
+                    </Trigger>
+                </Style.Triggers>
             </Style>
         </ResourceDictionary>
     </Application.Resources>

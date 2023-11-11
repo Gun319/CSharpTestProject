@@ -1,8 +1,8 @@
 ﻿using System.Windows.Controls;
-using ImageProcessing.ViewModels;
+using ImageProcessing.ViewModels.Business;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ImageProcessing.Views
+namespace ImageProcessing.Views.Business
 {
     /// <summary>
     /// ImageSynthesisVideoView.xaml 的交互逻辑

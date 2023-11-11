@@ -7,7 +7,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using OpenCvSharp;
 
-namespace ImageProcessing.ViewModels
+namespace ImageProcessing.ViewModels.Business
 {
     public partial class MatchTemplateViewModel : ViewModelBase
     {
@@ -15,31 +15,31 @@ namespace ImageProcessing.ViewModels
         /// 被匹配图像
         /// </summary>
         [ObservableProperty]
-        public string _srcImage;
+        public string? _srcImage;
 
         /// <summary>
         /// 模板图像
         /// </summary>
         [ObservableProperty]
-        public string _tempImage;
+        public string? _tempImage;
 
         /// <summary>
         /// 匹配结果
         /// </summary>
         [ObservableProperty]
-        public BitmapSource matchingResults;
+        public BitmapSource? matchingResults;
 
         /// <summary>
         /// 坐标
         /// </summary>
         [ObservableProperty]
-        public string _point;
+        public string? _point;
 
         /// <summary>
         /// 匹配度
         /// </summary>
         [ObservableProperty]
-        public string _matchingDegree;
+        public string? _matchingDegree;
 
         public MatchTemplateViewModel() { }
 
@@ -69,11 +69,14 @@ namespace ImageProcessing.ViewModels
         [RelayCommand]
         private Task Start()
         {
-            var point = TemplateMatch(SrcImage, TempImage, out double matchVal);
+            if (SrcImage is not null && TempImage is not null)
+            {
+                var point = TemplateMatch(SrcImage, TempImage, out double matchVal);
 
-            Point = $"X:{point.X} Y:{point.Y}";
-            MatchingDegree = matchVal.ToString();
-            
+                Point = $"X:{point.X} Y:{point.Y}";
+                MatchingDegree = matchVal.ToString();
+            }
+
             return Task.CompletedTask;
         }
 
@@ -89,8 +92,8 @@ namespace ImageProcessing.ViewModels
             OpenCvSharp.Point tempPoint = new();
             matchVal = 0d;
 
-            Mat srcImage = Cv2.ImRead(srcImg, ImreadModes.Grayscale);
-            Mat tempImage = Cv2.ImRead(tempImg, ImreadModes.Grayscale);
+            Mat srcImage = Cv2.ImRead(srcImg, ImreadModes.Color);
+            Mat tempImage = Cv2.ImRead(tempImg, ImreadModes.Color);
 
             if (srcImage.Width > tempImage.Width && srcImage.Height > tempImage.Height)
                 MatchingResults = MatchTemplate(tempImage, srcImage, out tempPoint, out matchVal);
@@ -166,7 +169,6 @@ namespace ImageProcessing.ViewModels
             }
             //返回匹配后图像
             return OpenCvSharp.WpfExtensions.BitmapSourceConverter.ToBitmapSource(mask);
-            //return OpenCvSharp.Extensions.BitmapConverter.ToBitmap(mask);
         }
     }
 }

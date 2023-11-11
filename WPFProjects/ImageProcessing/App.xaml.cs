@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Windows;
 using ImageProcessing.ViewModels;
+using ImageProcessing.ViewModels.Business;
+using ImageProcessing.ViewModels.Controls;
 using ImageProcessing.Views;
+using ImageProcessing.Views.Business;
+using ImageProcessing.Views.Controls;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ImageProcessing
@@ -27,12 +31,14 @@ namespace ImageProcessing
         {
             var services = new ServiceCollection();
 
-            services.AddScoped<ImageSynthesisVideoView>();
-            services.AddScoped<MatchTemplateView>();
+            services.AddSingleton<ItemMenuView>();
+            services.AddSingleton<ImageSynthesisVideoView>();
+            services.AddSingleton<MatchTemplateView>();
 
             services.AddSingleton<ShellViewModel>();
-            services.AddScoped<ImageSynthesisVideoViewModel>();
-            services.AddScoped<MatchTemplateViewModel>();
+            services.AddSingleton<ItemMenuViewModel>();
+            services.AddSingleton<ImageSynthesisVideoViewModel>();
+            services.AddSingleton<MatchTemplateViewModel>();
 
 
             return services.BuildServiceProvider();
