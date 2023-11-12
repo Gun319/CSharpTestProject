@@ -89,6 +89,7 @@ namespace ImageProcessing.ViewModels.Business
         /// <returns>当前匹配完成后 模板在匹配图像中左上角的坐标点</returns>
         public OpenCvSharp.Point TemplateMatch(string srcImg, string tempImg, out double matchVal)
         {
+
             OpenCvSharp.Point tempPoint = new();
             matchVal = 0d;
 
@@ -118,8 +119,6 @@ namespace ImageProcessing.ViewModels.Business
 
             //模板匹配
             Cv2.MatchTemplate(srcPic, tempalte, result, TemplateMatchModes.CCoeffNormed);// CCoeffNormed 最好匹配为1,值越小匹配越差
-            double minVal;
-            double maxVal;
 
             OpenCvSharp.Point minLoc = new(0, 0);
             OpenCvSharp.Point maxLoc = new(0, 0);
@@ -129,7 +128,7 @@ namespace ImageProcessing.ViewModels.Business
             Cv2.Normalize(result, result, 0, 1, NormTypes.MinMax, -1);
 
             //寻找极值
-            Cv2.MinMaxLoc(result, out minVal, out maxVal, out minLoc, out maxLoc);
+            Cv2.MinMaxLoc(result, out double minVal, out double maxVal, out minLoc, out maxLoc);
 
             // 最大值坐标
             matchLoc = maxLoc;
@@ -145,28 +144,11 @@ namespace ImageProcessing.ViewModels.Business
             tempPoint.X = matchLoc.X;
             tempPoint.Y = matchLoc.Y;
 
-            //循环查找画框显示
-            double threshold = 0.91;
+            const double threshold = 0.95;
 
-            Mat maskMulti = srcPic.Clone();
-            for (int i = 1; i < result.Rows - tempalte.Rows; i += tempalte.Rows)
-            {
-                for (int j = 1; j < result.Cols - tempalte.Cols; j += tempalte.Cols)
-                {
-                    OpenCvSharp.Rect roi = new(j, i, tempalte.Cols, tempalte.Rows); // 建立感兴趣
-                    Mat RoiResult = new(result, roi);
-                    Cv2.MinMaxLoc(RoiResult, out minVal, out maxVal, out minLoc, out maxLoc);// 查找极值
-                    matchLoc = maxLoc;//最大值坐标
-                    if (maxVal > threshold)
-                    {
-                        //画框显示
-                        Cv2.Rectangle(maskMulti, new OpenCvSharp.Point(j + maxLoc.X, i + maxLoc.Y), new OpenCvSharp.Point(j + maxLoc.X + tempalte.Cols, i + maxLoc.Y + tempalte.Rows), Scalar.Green, 2);
+            if (maxVal > threshold)
+                Cv2.Rectangle(mask, matchLoc, new OpenCvSharp.Point(matchLoc.X + tempalte.Cols, matchLoc.Y + tempalte.Rows), Scalar.Green, 8);
 
-                        string axis = '(' + Convert.ToString(i + maxLoc.Y) + ',' + Convert.ToString(j + maxLoc.X) + ')';
-                        Cv2.PutText(maskMulti, axis, new OpenCvSharp.Point(j + maxLoc.X, i + maxLoc.Y), HersheyFonts.HersheyPlain, 1, Scalar.Red, 1, LineTypes.Link4);
-                    }
-                }
-            }
             //返回匹配后图像
             return OpenCvSharp.WpfExtensions.BitmapSourceConverter.ToBitmapSource(mask);
         }
