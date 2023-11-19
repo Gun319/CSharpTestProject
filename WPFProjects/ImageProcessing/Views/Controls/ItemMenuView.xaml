@@ -11,16 +11,21 @@
     d:DesignHeight="450"
     d:DesignWidth="150"
     mc:Ignorable="d">
-    <Border BorderBrush="#D5DFE5" BorderThickness="0,0,0.5,0">
+    <Border
+        Margin="10,5"
+        BorderBrush="#D5DFE5"
+        BorderThickness="0.5"
+        CornerRadius="8">
         <Border.Effect>
             <DropShadowEffect
                 Direction="0"
                 Opacity="1"
-                ShadowDepth="1"
+                ShadowDepth="0"
                 Color="#D5DFE5" />
         </Border.Effect>
         <ListBox
             x:Name="ls"
+            Margin="0,5"
             ItemContainerStyle="{DynamicResource lbListBoxItemMenuStyle}"
             ItemsSource="{Binding ItemMenu, IsAsync=True}"
             SelectedIndex="0"

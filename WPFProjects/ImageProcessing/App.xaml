@@ -166,7 +166,7 @@
                                         <AdornerDecorator KeyboardNavigation.IsTabStop="False">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="150" />
+                                                    <ColumnDefinition Width="200" />
                                                     <ColumnDefinition Width="*" />
                                                 </Grid.ColumnDefinitions>
                                                 <!--  导航栏  -->
@@ -300,7 +300,7 @@
                             <ScrollViewer
                                 CanContentScroll="True"
                                 HorizontalScrollBarVisibility="Disabled"
-                                VerticalScrollBarVisibility="Auto">
+                                VerticalScrollBarVisibility="Hidden">
                                 <WrapPanel
                                     HorizontalAlignment="Center"
                                     IsItemsHost="True"
@@ -409,8 +409,9 @@
 
             <Style x:Key="lbListBoxItemMenuStyle" TargetType="{x:Type ListBoxItem}">
                 <Setter Property="Cursor" Value="Hand" />
-                <Setter Property="Width" Value="150" />
-                <Setter Property="Height" Value="40" />
+                <Setter Property="Width" Value="165" />
+                <Setter Property="Height" Value="36" />
+                <Setter Property="Margin" Value="0,2" />
                 <Setter Property="Cursor" Value="Hand" />
                 <Setter Property="FocusVisualStyle" Value="{x:Null}" />
                 <Setter Property="HorizontalAlignment" Value="Center" />
@@ -423,7 +424,8 @@
                                 Width="{TemplateBinding Width}"
                                 Height="{TemplateBinding Height}"
                                 VerticalAlignment="Center"
-                                Background="{TemplateBinding Background}">
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="5">
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
