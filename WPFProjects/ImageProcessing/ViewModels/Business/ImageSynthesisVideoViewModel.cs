@@ -93,7 +93,10 @@ namespace ImageProcessing.ViewModels.Business
         [RelayCommand]
         private Task Import()
         {
-            SourceMaterialPath = OpenFileDialog(true);
+            OpenFolderDialog folderBrowser = new();
+
+            if (folderBrowser.ShowDialog() is true)
+                SourceMaterialPath = folderBrowser.FolderName;
 
             return Task.CompletedTask;
         }
@@ -256,25 +259,6 @@ namespace ImageProcessing.ViewModels.Business
                     FilePath = videoFilePath
                 });
             }
-        }
-
-        /// <summary>
-        /// 文件/文件夹选择对话框
-        /// </summary>
-        /// <param name="folderBrowse">是否文件夹浏览</param>
-        /// <returns></returns>
-        private static string OpenFileDialog(bool folderBrowse = false)
-        {
-            string path = string.Empty;
-            Microsoft.WindowsAPICodePack.Dialogs.CommonOpenFileDialog folderBrowser = new()
-            {
-                IsFolderPicker = folderBrowse
-            };
-
-            if (folderBrowser.ShowDialog() is Microsoft.WindowsAPICodePack.Dialogs.CommonFileDialogResult.Ok)
-                path = folderBrowser.FileName;
-
-            return path;
         }
 
         /// <summary>

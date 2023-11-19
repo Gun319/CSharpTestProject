@@ -32,7 +32,7 @@ namespace XAMLToImage
             control.Arrange(rect);
             bitmapRender.Render(control);
 
-            BitmapEncoder encoder = null;
+            BitmapEncoder? encoder = null;
             //选取编码器
             switch (imageType.ToUpper())
             {
@@ -55,8 +55,8 @@ namespace XAMLToImage
                     break;
             }
 
-            encoder.Frames.Add(BitmapFrame.Create(bitmapRender));
-            encoder.Save(result);
+            encoder?.Frames.Add(BitmapFrame.Create(bitmapRender));
+            encoder?.Save(result);
         }
 
         private static Size RetrieveDesiredSize(Control control)

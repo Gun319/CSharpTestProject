@@ -18,7 +18,7 @@ namespace GlobalExceptionFilter
 
         public Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            string removeIP = context.HttpContext.Connection.RemoteIpAddress.ToString();
+            string removeIP = context.HttpContext.Connection.RemoteIpAddress!.ToString();
             string cachKey = $"LastVisitTick_{removeIP}";
             long? lastTick = _memoryCache.Get<long?>(cachKey);
 

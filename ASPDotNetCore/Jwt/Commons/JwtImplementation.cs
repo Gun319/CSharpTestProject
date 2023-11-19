@@ -44,7 +44,7 @@ namespace Jwt.Commons
             }
 
             // 读取 SecretKey
-            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Authentication:SecretKey"]));
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Authentication:SecretKey"]!));
 
             // 选择加密算法
             var encryption = SecurityAlgorithms.HmacSha256;
