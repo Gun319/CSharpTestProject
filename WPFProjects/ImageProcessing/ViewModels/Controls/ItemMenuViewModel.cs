@@ -22,11 +22,11 @@ namespace ImageProcessing.ViewModels.Controls
             Init();
         }
 
-        void Init() => ItemMenu = new()
-            {
+        void Init() => ItemMenu =
+            [
                 new MenuItem{ MenuName = "OpenCv视频合成", View = App.Current.Services.GetService<ImageSynthesisVideoView>() },
                 new MenuItem{ MenuName = "OpenCv模板匹配", View = App.Current.Services.GetService<MatchTemplateView>() }
-            };
+            ];
 
         [RelayCommand]
         public static Task Navigation(ListBox parameter)
