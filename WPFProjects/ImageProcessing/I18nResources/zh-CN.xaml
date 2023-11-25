@@ -3,20 +3,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:sys="clr-namespace:System;assembly=netstandard">
 
-    <sys:String x:Key="WindowTitle">ImageProcessing</sys:String>
+    <!--<sys:String x:Key="WindowTitle">ImageProcessing</sys:String>-->
+    <sys:String x:Key="WindowTitle">图像处理</sys:String>
 
     <!--#region 图像合成视频-->
-    <sys:String x:Key="GroupLeftHeader">素材域</sys:String>
-    <sys:String x:Key="GroupRightHeader">预览域</sys:String>
-    <sys:String x:Key="FilePath">素材路径：</sys:String>
     <sys:String x:Key="GroupLeft_Button_import">导入素材</sys:String>
-    <sys:String x:Key="GroupLeft_Button_Newimport">导入新素材</sys:String>
     <sys:String x:Key="GroupLeft_Button_Start">开始合成</sys:String>
     <sys:String x:Key="FPS">帧率：</sys:String>
-    <sys:String x:Key="CatonThreshold">阈值(5~1000)：</sys:String>
     <sys:String x:Key="CatonThresholdTips">设置导入素材的速率，缓解低配机卡顿</sys:String>
     <sys:String x:Key="Animation_Tips">加载中……</sys:String>
-
+    <sys:String x:Key="Suffix">文件类型：</sys:String>
     <!--#endregion 图像合成视频-->
 
     <!--#region 匹配模板-->

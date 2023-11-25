@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using ImageProcessing.Operates;
 using Microsoft.Win32;
 using OpenCvSharp;
 
@@ -20,6 +17,11 @@ namespace ImageProcessing.ViewModels.Business
     public partial class ImageSynthesisVideoViewModel : ViewModelBase
     {
         #region 通知属性、私有属性、命令、变量
+        /// <summary>
+        /// 文件格式
+        /// </summary>
+        [ObservableProperty]
+        private string _fileSuffix = "jpg";
 
         /// <summary>
         /// 素材路径
@@ -40,16 +42,10 @@ namespace ImageProcessing.ViewModels.Business
         private ObservableCollection<SourceMaterials> _sourceMaterialList;
 
         /// <summary>
-        /// 成品列表
-        /// </summary>
-        [ObservableProperty]
-        private ObservableCollection<FinishProducts> _finishProductsList;
-
-        /// <summary>
         /// 帧率
         /// </summary>
         [ObservableProperty]
-        private double _fps;
+        private string _fps = "0";
 
         /// <summary>
         /// Loading Visibility
@@ -58,22 +54,10 @@ namespace ImageProcessing.ViewModels.Business
         private Visibility _loadingVisibility = Visibility.Collapsed;
 
         /// <summary>
-        /// 图像预览
-        /// </summary>
-        [ObservableProperty]
-        private string _imagePreview = string.Empty;
-
-        /// <summary>
         /// 视频预览
         /// </summary>
         [ObservableProperty]
         private string _videoPreview = string.Empty;
-
-        /// <summary>
-        /// 卡顿阈值
-        /// </summary>
-        [ObservableProperty]
-        private int _stuckThreshold;
 
         private VideoWriter? _videoWriter;
 
@@ -81,11 +65,9 @@ namespace ImageProcessing.ViewModels.Business
 
         public ImageSynthesisVideoViewModel()
         {
-            SourceMaterialList = new ObservableCollection<SourceMaterials>();
-            FinishProductsList = new ObservableCollection<FinishProducts>();
+            SourceMaterialList = [];
 
             BindingOperations.EnableCollectionSynchronization(SourceMaterialList, this);
-            BindingOperations.EnableCollectionSynchronization(FinishProductsList, this);
         }
 
         #region Command Methods
@@ -98,13 +80,20 @@ namespace ImageProcessing.ViewModels.Business
             if (folderBrowser.ShowDialog() is true)
                 SourceMaterialPath = folderBrowser.FolderName;
 
+            SourceMaterialListAddItem(LoadDir(SourceMaterialPath));
+
             return Task.CompletedTask;
         }
 
         [RelayCommand]
         private Task StartSynthesis()
         {
-            if (!FileChecked("发现您未导入素材，请先导入素材")) return Task.CompletedTask;
+            //if (!FileChecked("发现您未导入素材，请先导入素材")) return Task.CompletedTask;
+            if (SourceMaterialList.Count is 0)
+            {
+                MessageBox.Show("发现您未导入素材，请先导入素材", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                return Task.CompletedTask;
+            }
 
             SaveFileDialog? saveFile = new()
             {
@@ -116,29 +105,14 @@ namespace ImageProcessing.ViewModels.Business
             if (saveFile.ShowDialog() is true)
             {
                 LoadingVisibility = Visibility.Visible;
-                SourceMaterialPath = saveFile.FileName;
-
-                ConfigOperate.SetKeyValue(ConfigOperate.OpenFilePathKey, SourceMaterialPath);
-                ConfigOperate.SetKeyValue(ConfigOperate.FPSKey, Fps.ToString());
+                FinishProductSavePath = saveFile.FileName;
 
                 VideoSynthesis();
-            }
-            else
-            {
-                LoadingVisibility = Visibility.Collapsed;
-            }
 
-            return Task.CompletedTask;
-        }
-
-        [RelayCommand]
-        private Task Preview(ListBox parameter)
-        {
-            if (parameter.SelectedItem is not null)
-            {
-                ImagePreview = (parameter.SelectedItem as SourceMaterials)!.FilePath!;
-                parameter.SelectedIndex = -1;
+                return Task.CompletedTask;
             }
+            LoadingVisibility = Visibility.Collapsed;
+
             return Task.CompletedTask;
         }
 
@@ -173,7 +147,6 @@ namespace ImageProcessing.ViewModels.Business
         {
             string videoFilePath = (parameter.Data.GetData(DataFormats.FileDrop) as Array)!.OfType<string>().ToList().FirstOrDefault()!;
             VideoPreview = videoFilePath;
-            FinishProductsListAddItem(videoFilePath);
 
             return Task.CompletedTask;
         }
@@ -223,42 +196,10 @@ namespace ImageProcessing.ViewModels.Business
                     mat.Dispose();
 
                     LoadingVisibility = Visibility.Collapsed;
+                    VideoPreview = string.Empty;
                     VideoPreview = FinishProductSavePath;
-                    ConfigOperate.SetKeyValue(ConfigOperate.SaveFilePathKey, FinishProductSavePath);
-                    FinishProductsListAddItem(FinishProductSavePath);
                 }
             });
-        }
-
-        readonly string defaultMessage = "您选择的文件夹中没有正确的素材（*.bmp），请检查您路径并重试";
-        /// <summary>
-        /// 检查素材
-        /// </summary>
-        /// <returns></returns>
-        private bool FileChecked(string msg)
-        {
-            bool result = true;
-            if (!strings.Any())
-            {
-                System.Windows.MessageBox.Show(msg, Process.GetCurrentProcess().MainWindowTitle, MessageBoxButton.OK);
-                result = false;
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// 视频列表新增项
-        /// </summary>
-        /// <param name="videoFilePath"></param>
-        private void FinishProductsListAddItem(string videoFilePath)
-        {
-            if (!FinishProductsList.Any(v => v.FilePath == videoFilePath))
-            {
-                FinishProductsList.Add(new FinishProducts
-                {
-                    FilePath = videoFilePath
-                });
-            }
         }
 
         /// <summary>
@@ -267,52 +208,28 @@ namespace ImageProcessing.ViewModels.Business
         private static void PositioningFile(string filePath) => System.Diagnostics.Process.Start("explorer.exe", $"/select,{filePath}");
         #endregion
 
-        #region 图片异步加载
-
-        List<SourceMaterials> strings = new();
+        #region 图片异步加载         
         private readonly object _lockObject = new();
 
-        private void ImageShowe(string path)
-        {
-            LoadingVisibility = Visibility.Visible;
-
-            ConfigOperate.SetKeyValue(ConfigOperate.ThresholdKey, StuckThreshold.ToString());
-
-            strings = LoadDir(path);
-            SourceMaterialList.Clear();
-
-            if (FileChecked(defaultMessage))
-                SourceMaterialListAddItem();
-        }
-
-        private void SourceMaterialListAddItem()
+        private void SourceMaterialListAddItem(List<SourceMaterials> strings)
         {
             Task.Run(() =>
             {
-                lock (_lockObject)
-                {
-                    foreach (var item in strings)
-                    {
-                        Thread.Sleep(StuckThreshold);
-                        SourceMaterialList.Add(item);
-                    }
-                }
-
-                if (SourceMaterialList.Any())
-                    ImagePreview = SourceMaterialList.FirstOrDefault()!.FilePath!;
+                foreach (var item in strings)
+                    SourceMaterialList.Add(item);
 
                 LoadingVisibility = Visibility.Collapsed;
             });
         }
 
-        private static List<SourceMaterials> LoadDir(string dirPath)
+        private List<SourceMaterials> LoadDir(string dirPath)
         {
-            List<SourceMaterials> images = new();
+            List<SourceMaterials> images = [];
 
-            if (Directory.Exists(dirPath))
+            if (Directory.Exists(dirPath) && !string.IsNullOrWhiteSpace(FileSuffix))
             {
                 images.AddRange(new DirectoryInfo(dirPath)
-                    .GetFiles("*.bmp").OrderBy(o => o.FullName)
+                    .GetFiles($"*.{FileSuffix}").OrderBy(o => o.FullName)
                     .Select(item => new SourceMaterials
                     {
                         FilePath = item.FullName
