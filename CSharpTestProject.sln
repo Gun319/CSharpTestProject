@@ -57,7 +57,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Localization.Framework", "W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCVSharp.Study", "WPFProjects\OpenCVSharp.Study\OpenCVSharp.Study.csproj", "{32E6A8C7-2598-462A-84E9-C55045243CCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageProcessing", "WPFProjects\ImageProcessing\ImageProcessing.csproj", "{94711F06-602E-4C7D-9858-3150B9A23FE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageProcessing", "WPFProjects\ImageProcessing\ImageProcessing.csproj", "{94711F06-602E-4C7D-9858-3150B9A23FE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
