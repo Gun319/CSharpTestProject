@@ -25,7 +25,8 @@ namespace ImageProcessing.ViewModels.Controls
         void Init() => ItemMenu =
             [
                 new MenuItem{ MenuName = "OpenCv视频合成", View = App.Current.Services.GetService<ImageSynthesisVideoView>() },
-                new MenuItem{ MenuName = "OpenCv模板匹配", View = App.Current.Services.GetService<MatchTemplateView>() }
+                new MenuItem{ MenuName = "OpenCv模板匹配", View = App.Current.Services.GetService<MatchTemplateView>() },
+                new MenuItem{ MenuName = "漫画风", View = App.Current.Services.GetService<ComicView>() }
             ];
 
         [RelayCommand]

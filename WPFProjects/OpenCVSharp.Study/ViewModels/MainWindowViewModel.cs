@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -31,16 +33,17 @@ namespace OpenCVSharp.Study.ViewModels
         /// <summary>
         /// OpenCvSharp 视频捕获对象
         /// </summary>
-        private VideoCapture videoCapture;
+        private static VideoCapture videoCapture;
 
-        /// <summary>
-        /// 视频处理定时器
-        /// </summary>
-        private System.Windows.Threading.DispatcherTimer dispatcherTimer;
+        private static Mat frame = new Mat();
 
-        private Mat frame = new Mat();
+        private static BitmapData bitmapData = new BitmapData();
+
+        private static Bitmap bitmap;
 
         Int32Rect rect;
+
+        static int width = 0, height = 0;
 
         /// <summary>
         /// 打开文件
@@ -54,8 +57,6 @@ namespace OpenCVSharp.Study.ViewModels
         public MainWindowViewModel()
         {
             videoCapture = new VideoCapture();
-
-            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
 
             OpenFileCommand = new DelegateCommand(OpenFile);
             MNCommand = new DelegateCommand(MN);
@@ -93,51 +94,40 @@ namespace OpenCVSharp.Study.ViewModels
 
             if (videoCapture.IsOpened())
             {
-                var fps = videoCapture.Fps;
+                var timer = (int)Math.Round(1000 / videoCapture.Fps) - 8;
+                width = videoCapture.FrameWidth;
+                height = videoCapture.FrameHeight;
 
-                var timer = Convert.ToInt32(1000 / fps) - 15;
-
-                Bitmap = new WriteableBitmap(videoCapture.FrameWidth, videoCapture.FrameHeight, 96, 96, PixelFormats.Bgra32, null);
-
+                Bitmap = new WriteableBitmap(width, height, 96, 96, PixelFormats.Bgra32, null);
                 rect = new Int32Rect(0, 0, Bitmap.PixelWidth, Bitmap.PixelHeight);
 
-                videoCapture.Read(frame);
-
-                if (!frame.Empty())
+                while (true)
                 {
-                    dispatcherTimer.Interval = TimeSpan.FromMilliseconds(timer);
-                    dispatcherTimer.Tick += DispatcherTimer_Tick;
-                    dispatcherTimer.Start();
+                    videoCapture.Read(frame);
+                    if (!frame.Empty())
+                    {
+                        ShowImage();
+                        Cv2.WaitKey(timer);
+                    }
                 }
             }
         }
 
-        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        private void ShowImage()
         {
-            videoCapture.Read(frame);
-
             Bitmap.Lock();
 
-            var bitmap = frame.ToBitmap();
+            bitmap = frame.ToBitmap();
 
-            var bitmapData = bitmap.LockBits(new Rectangle(new System.Drawing.Point(0, 0), bitmap.Size),
+            bitmapData = bitmap.LockBits(new Rectangle(new System.Drawing.Point(0, 0), bitmap.Size),
                 System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
 
             Bitmap.WritePixels(rect, bitmapData.Scan0, bitmapData.Height * bitmapData.Stride, bitmapData.Stride, 0, 0);
 
             bitmap.UnlockBits(bitmapData);
+            bitmap.Dispose();
 
             Bitmap.Unlock();
-
-        }
-
-        /// <summary>
-        /// 停止定时器
-        /// </summary>
-        private void StopTimer()
-        {
-            dispatcherTimer.Stop();
-            dispatcherTimer.Tick -= DispatcherTimer_Tick;
         }
 
         /// <summary>
