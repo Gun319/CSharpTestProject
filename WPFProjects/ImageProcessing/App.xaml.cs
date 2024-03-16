@@ -3,7 +3,6 @@ using System.Windows;
 using ImageProcessing.ViewModels;
 using ImageProcessing.ViewModels.Business;
 using ImageProcessing.ViewModels.Controls;
-using ImageProcessing.Views;
 using ImageProcessing.Views.Business;
 using ImageProcessing.Views.Controls;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,8 +25,7 @@ namespace ImageProcessing
 
         public IServiceProvider Services { get; }
 
-
-        private static IServiceProvider ConfigureServices()
+        private static ServiceProvider ConfigureServices()
         {
             var services = new ServiceCollection();
 

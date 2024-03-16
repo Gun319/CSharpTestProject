@@ -1,5 +1,7 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Threading.Tasks;
+using Microsoft.Win32;
 
 namespace ImageProcessing.Operates
 {
@@ -62,6 +64,22 @@ namespace ImageProcessing.Operates
                 return configVaule;
 
             return string.Empty;
+        }
+
+        private static void AutoStart(bool isAuto = true)
+        {
+            RegistryKey r_local = Registry.CurrentUser;
+            RegistryKey r_run = r_local.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run");
+            string applicationName = AppDomain.CurrentDomain.FriendlyName;
+            string path = @$"{AppDomain.CurrentDomain.BaseDirectory}{applicationName}";
+
+            if (isAuto)
+                r_run.SetValue(applicationName, path);
+            else
+                r_run.DeleteValue(applicationName, false);
+
+            r_run.Close();
+            r_local.Close();
         }
     }
 }
