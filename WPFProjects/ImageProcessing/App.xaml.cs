@@ -33,12 +33,14 @@ namespace ImageProcessing
             services.AddSingleton<ImageSynthesisVideoView>();
             services.AddSingleton<MatchTemplateView>();
             services.AddSingleton<ComicView>();
+            services.AddSingleton<DocumentCorrectionView>();
 
             services.AddSingleton<ShellViewModel>();
             services.AddSingleton<ItemMenuViewModel>();
             services.AddSingleton<ImageSynthesisVideoViewModel>();
             services.AddSingleton<MatchTemplateViewModel>();
             services.AddSingleton<ComicViewModel>();
+            services.AddSingleton<DocumentCorrectionViewModel>();
 
 
             return services.BuildServiceProvider();
